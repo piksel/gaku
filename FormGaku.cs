@@ -10,8 +10,6 @@ using System.Windows.Forms;
 
 namespace Gaku
 {
-    using ModKeys = System.Windows.Input.ModifierKeys;
-    using Keyboard = System.Windows.Input.Keyboard;
     using System.Runtime.InteropServices;
     using System.Diagnostics;
     using System.IO;
@@ -41,62 +39,61 @@ namespace Gaku
         string imageFile = "";
 
         IImage imgurlImage;
-        private WebClient webClient;
+        private WebClient wcDownload;
         private string versionString;
         private string gakuTitle;
         private string downloadFilename;
 
         public FormGaku()
         {
-            AllowTransparency = true;
             InitializeComponent();
 
-            webClient = new WebClient();
-            webClient.DownloadFileCompleted += WebClient_DownloadFileCompleted;
-            webClient.DownloadProgressChanged += WebClient_DownloadProgressChanged;
+            wcDownload = new WebClient();
+            wcDownload.DownloadFileCompleted += wcDownload_DownloadFileCompleted;
+            wcDownload.DownloadProgressChanged += wcDownload_DownloadProgressChanged;
 
             var args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-                OpenImage(args[1]);
+                openImage(args[1]);
             }
             else
             {
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
                 BackColor = Color.FromArgb(255, 255, 75, 168);
-                pictureBox1.Dock = DockStyle.Fill;
-                pictureBox1.BackColor = BackColor;
-                label4.Visible = true;
-                pictureBox2.Visible = true;
+                pbMain.Dock = DockStyle.Fill;
+                pbMain.BackColor = BackColor;
+                lTitle.Visible = true;
+                pbLogotype.Visible = true;
                 imageSettings = ImageSettings.Default;
-                button1.Visible = true;
+                bClose.Visible = true;
             }
 
             var v = Assembly.GetExecutingAssembly().GetName().Version;
             versionString = $"{v.Major}.{v.Minor}.{v.Revision}";
             gakuTitle = "Gaku v" + versionString;
-            label4.Text = gakuTitle;
-            gakuV100ToolStripMenuItem.Text = label4.Text;
+            lTitle.Text = gakuTitle;
+            gakuV100ToolStripMenuItem.Text = lTitle.Text;
 
-            MouseWheel += Form1_MouseWheel;
-            pictureBox1.MouseWheel += Form1_MouseWheel;
+            MouseWheel += global_MouseWheel;
+            pbMain.MouseWheel += global_MouseWheel;
         }
 
-        private void WebClient_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void wcDownload_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            progressBar1.Value = e.ProgressPercentage;
+            pbDownloading.Value = e.ProgressPercentage;
             var dlText = $"Downloading image, {e.BytesReceived} of {e.TotalBytesToReceive}";
             Text = $"{dlText} - {gakuTitle}";
             lDownloading.Text = dlText;
         }
 
-        private void WebClient_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        private void wcDownload_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             pDownloading.Visible = false;
-            OpenImage(downloadFilename);
+            openImage(downloadFilename);
         }
 
-        private void OpenImage(string file)
+        private void openImage(string file)
         {
             imageFile = file;
             using (var ms = new MemoryStream())
@@ -104,29 +101,29 @@ namespace Gaku
                 var image = Image.FromFile(imageFile);
                 image.Save(ms, image.RawFormat);
                 ms.Seek(0, SeekOrigin.Begin);
-                pictureBox1.Image = Image.FromStream(ms);
+                pbMain.Image = Image.FromStream(ms);
             }
             Text = Path.GetFileName(imageFile) + " - Gaku";
 
-            label4.Visible = false;
-            pictureBox2.Visible = false;
-            button1.Visible = false;
+            lTitle.Visible = false;
+            pbLogotype.Visible = false;
+            bClose.Visible = false;
             BackColor = Color.Black;
 
             imageSettings = ImageSettings.ForFile(imageFile);
-            pictureBox1.Location = imageSettings.ImageOffset;
+            pbMain.Location = imageSettings.ImageOffset;
             zoom = imageSettings.Zoom;
-            UpdateZoom();
+            updateZoom();
             updateBorderStyle();
             if (imageSettings.New)
             {
                 if (imageSettings.DisplayMode == DisplayMode.AutoFit)
                 {
-                    imageSettings.FrameSize = GetAutoSize();
+                    imageSettings.FrameSize = getAutoSize();
                 }
             }
 
-            SetSize(imageSettings.FrameSize);
+            setSize(imageSettings.FrameSize);
 
             if (imageSettings.Position != Point.Empty)
             {
@@ -136,29 +133,30 @@ namespace Gaku
             else
             {
                 var wa = Screen.PrimaryScreen.WorkingArea;
-
-                //StartPosition = FormStartPosition.CenterScreen;
                 StartPosition = FormStartPosition.Manual;
-                Location = new Point((wa.Width / 2) - (imageSettings.FrameSize.Width / 2) + wa.Location.X,
-                    (wa.Height / 2) - (imageSettings.FrameSize.Height / 2) + wa.Location.Y);
+                Location = new Point(
+                    (wa.Width / 2) - (imageSettings.FrameSize.Width / 2) + wa.Location.X,
+                    (wa.Height / 2) - (imageSettings.FrameSize.Height / 2) + wa.Location.Y
+                );
             }
 
-
             updateDisplayMode();
-
-            var ep = new EncoderParameters();
-            var th = pictureBox1.Image.GetThumbnailImage(32, 32, () => true, IntPtr.Zero);
-            var bmp = new Bitmap(th);
-            var hicon = bmp.GetHicon();
-            Icon = Icon.FromHandle(hicon);
-
+            updateIcon();
 
         }
 
-        private Size GetAutoSize()
+        private void updateIcon()
         {
-            int width = pictureBox1.Image.Width;
-            int height = pictureBox1.Image.Height;
+            var th = pbMain.Image.GetThumbnailImage(32, 32, () => true, IntPtr.Zero);
+            var bmp = new Bitmap(th);
+            var hicon = bmp.GetHicon();
+            Icon = Icon.FromHandle(hicon);
+        }
+
+        private Size getAutoSize()
+        {
+            int width = pbMain.Image.Width;
+            int height = pbMain.Image.Height;
 
             var borderPadding = imageSettings.BorderStyle == BorderStyle.Custom ? imageSettings.BorderWidth * 2 : 0;
 
@@ -171,7 +169,7 @@ namespace Gaku
                 {
                     width = maxWidth;
                 }
-                double scale = ((double)width + borderPadding) / pictureBox1.Image.Width;
+                double scale = ((double)width + borderPadding) / pbMain.Image.Width;
                 height = (int)(scale * height);
             }
             else
@@ -180,25 +178,20 @@ namespace Gaku
                 {
                     height = maxHeight;
                 }
-                double scale = ((double)height + borderPadding) / pictureBox1.Image.Height;
+                double scale = ((double)height + borderPadding) / pbMain.Image.Height;
                 width = (int)(scale * width);
             }
 
             return new Size(width, height);
         }
 
-        private void SetSize(Size frameSize)
+        private void setSize(Size frameSize)
         {
             Width = frameSize.Width;
             Height = frameSize.Height;
         }
 
-        private void Form1_MouseWheel(object sender, MouseEventArgs e)
-        {
-            UpdateZoom(e.Delta / WHEEL_DELTA);
-        }
-
-        private void UpdateZoom(int delta = 0)
+        private void updateZoom(int delta = 0)
         {
             var oldZoom = zoom;
             while (delta != 0)
@@ -219,17 +212,17 @@ namespace Gaku
             )
             {
                 zoom = 1;
-                pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+                pbMain.SizeMode = PictureBoxSizeMode.Normal;
             }
             else
             {
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
 
             }
             label3.Text = zoom.ToString("F3");
 
-            pictureBox1.Width = (int)(zoom * pictureBox1.Image.Width);
-            pictureBox1.Height = (int)(zoom * pictureBox1.Image.Height);
+            pbMain.Width = (int)(zoom * pbMain.Image.Width);
+            pbMain.Height = (int)(zoom * pbMain.Image.Height);
         }
 
         protected override CreateParams CreateParams
@@ -243,106 +236,10 @@ namespace Gaku
             }
         }
 
-        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
-        {
-            var location = localDelta ? (sender as Control).PointToClient(e.Location) : e.Location;
-            var deltaX = moveOrigin.X - location.X;
-            var deltaY = moveOrigin.Y - location.Y;
-
-            if (moveMode == MoveMode.Image)
-            {
-                var newX = pictureBox1.Left - deltaX;
-                var newY = pictureBox1.Top - deltaY;
-
-                if (newX > 0) newX = 0;
-                if (newY > 0) newY = 0;
-
-                pictureBox1.Left = newX;
-                pictureBox1.Top = newY;
-
-            }
-            else if (moveMode == MoveMode.Window)
-            {
-                Left -= deltaX;
-                Top -= deltaY;
-            }
-            else if (moveMode == MoveMode.Size)
-            {
-                if (Keyboard.Modifiers.HasFlag(ModKeys.Shift))
-                {
-                    //var deltaCombined = ((deltaX + deltaY) / 2) * (Width + Height);
-                    //deltaX = deltaCombined / Width;
-                    //deltaY = deltaCombined / Height;
-                }
-
-                if (hysterisisCooldown > 0)
-                {
-                    hysterisisCooldown--;
-                    return;
-                }
-                hysterisisCooldown = 3;
-
-                if (sizeMode.HasFlag(SizeMode.Left))
-                {
-                    deltaX = 0 - deltaX;
-                    //Left += deltaX;
-                }
-                if (sizeMode.HasFlag(SizeMode.Top))
-                {
-                    deltaY = 0 - deltaY;
-                    //Top += deltaY;
-
-                }
-
-                var newWidth = rectOrigin.Width - deltaX;
-                var newHeight = rectOrigin.Height - deltaY;
-
-                if (newWidth < 10) newWidth = 10;
-                if (newHeight < 10) newHeight = 10;
-
-                if (Keyboard.Modifiers.HasFlag(ModKeys.Shift))
-                {
-                    float borderPadding = imageSettings.BorderStyle == BorderStyle.Custom ? imageSettings.BorderWidth * 2 : 0;
-                    double scale = ((double)newHeight + borderPadding) / pictureBox1.Image.Height;
-                    newWidth = (int)( (scale * pictureBox1.Image.Width) - borderPadding*2);
-                }
-
-                Width = newWidth;
-                Height = newHeight;
-
-                if (sizeMode.HasFlag(SizeMode.Left))
-                {
-                    //deltaX = (int) (deltaX * 1.5);
-
-                    //Left = rectOrigin.Left + (deltaX*2);
-                    correction.X = deltaX;
-
-                }
-            }
-        }
-
-        private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
-        {
-            moveMode = MoveMode.None;
-            label2.Text = moveMode.ToString();
-
-            imageSettings.FrameSize = Size;
-            imageSettings.Position = Location;
-            imageSettings.ImageOffset = pictureBox1.Location;
-            imageSettings.Zoom = zoom;
-
-            imageSettings.Save();
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-            SetSize(imageSettings.FrameSize);
-            //button1.Text = "\uE8BB";
-        }
-
-        private void Form1_MouseClick(object sender, MouseEventArgs e)
-        {
-
+            setSize(imageSettings.FrameSize);
+            //bClose.Text = "\uE8BB";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -366,52 +263,17 @@ namespace Gaku
         {
             if(imageSettings.DisplayMode == DisplayMode.AutoFit)
             {
-                pictureBox1.Dock = DockStyle.Fill;
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                pbMain.Dock = DockStyle.Fill;
+                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else
             {
-                pictureBox1.Dock = DockStyle.None;
-                pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
+                pbMain.Dock = DockStyle.None;
+                pbMain.SizeMode = PictureBoxSizeMode.AutoSize;
 
             }
         }
 
-        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button != MouseButtons.Left) return;
-
-            moveOrigin = localDelta ? (sender as Control).PointToClient(e.Location) : e.Location;
-            rectOrigin = new Rectangle(Location, Size);
-
-            if (Keyboard.Modifiers.HasFlag(ModKeys.Control))
-            {
-                if(imageSettings.DisplayMode == DisplayMode.PanMoveCrop)
-                    moveMode = MoveMode.Image;
-            }
-            else if (Keyboard.Modifiers.HasFlag(ModKeys.Alt))
-            {
-                moveMode = MoveMode.Size;
-                sizeMode = SizeMode.None;
-
-                var localPos = PointToClient(e.Location);
-
-                sizeMode |= (localPos.X > Width / 2) ? SizeMode.Right : SizeMode.Left;
-                sizeMode |= (localPos.Y > Height / 2) ? SizeMode.Bottom : SizeMode.Top;
-
-                sizeMode = SizeMode.BottomRight;
-            }
-            else if (Keyboard.Modifiers.HasFlag(ModKeys.Shift))
-            {
-                if(imageSettings.DisplayMode == DisplayMode.PanMoveCrop)
-                    moveMode = MoveMode.Zoom;
-            }
-            else
-            {
-                moveMode = MoveMode.Window;
-            }
-
-        }
 
         void addKVItem(List<string> items, string key, object value)
         {
@@ -421,14 +283,12 @@ namespace Gaku
         void addKVItem(List<string> items, string key, string value)
         {
             if (string.IsNullOrEmpty(value)) return;
-            items.Add(key.PadRight(26) + ": " + value);
+            items.Add(key.PadRight(16) + ": " + value);
         }
 
-        private void imageInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToggleImageInformation()
         {
-            if (string.IsNullOrEmpty(imageFile)) return;
-
-            if (!alphaLabel1.Visible)
+            if (!alImageInfo.Visible)
             {
 
                 var items = new List<string>();
@@ -437,64 +297,34 @@ namespace Gaku
                 var tf = TagLib.File.Create(imageFile);
                 var image = tf as TagLib.Image.File;
 
-                addKVItem(items, "File path",       Path.GetDirectoryName(imageFile));
-                addKVItem(items, "Filename",        Path.GetFileName(imageFile));
-                addKVItem(items, "Creator",         image.ImageTag.Creator);
-                addKVItem(items, "Comment",         image.ImageTag.Comment);
-                addKVItem(items, "Keywords",        string.Join(" ", image.ImageTag.Keywords));
-                addKVItem(items, "Rating",          image.ImageTag.Rating);
-                addKVItem(items, "DateTime",        image.ImageTag.DateTime);
-                addKVItem(items, "Orientation",     image.ImageTag.Orientation);
-                addKVItem(items, "Software",        image.ImageTag.Software);
-                addKVItem(items, "ExposureTime",    image.ImageTag.ExposureTime);
-                addKVItem(items, "FNumber",         image.ImageTag.FNumber);
+                addKVItem(items, "File path", Path.GetDirectoryName(imageFile));
+                addKVItem(items, "Filename", Path.GetFileName(imageFile));
+                addKVItem(items, "Creator", image.ImageTag.Creator);
+                addKVItem(items, "Comment", image.ImageTag.Comment);
+                addKVItem(items, "Keywords", string.Join(" ", image.ImageTag.Keywords));
+                addKVItem(items, "Rating", image.ImageTag.Rating);
+                addKVItem(items, "DateTime", image.ImageTag.DateTime);
+                addKVItem(items, "Orientation", image.ImageTag.Orientation);
+                addKVItem(items, "Software", image.ImageTag.Software);
+                addKVItem(items, "ExposureTime", image.ImageTag.ExposureTime);
+                addKVItem(items, "FNumber", image.ImageTag.FNumber);
                 addKVItem(items, "ISOSpeedRatings", image.ImageTag.ISOSpeedRatings);
-                addKVItem(items, "FocalLength",     image.ImageTag.FocalLength);
+                addKVItem(items, "FocalLength", image.ImageTag.FocalLength);
                 addKVItem(items, "FocalLength35mm", image.ImageTag.FocalLengthIn35mmFilm);
-                addKVItem(items, "Make",            image.ImageTag.Make);
-                addKVItem(items, "Model",           image.ImageTag.Model);
+                addKVItem(items, "Make", image.ImageTag.Make);
+                addKVItem(items, "Model", image.ImageTag.Model);
 
                 if (image.Properties != null)
                 {
-                    addKVItem(items, "Width",     image.Properties.PhotoWidth);
-                    addKVItem(items, "Height",    image.Properties.PhotoHeight);
-                    addKVItem(items, "Type",      image.Properties.Description);
+                    addKVItem(items, "Width", image.Properties.PhotoWidth);
+                    addKVItem(items, "Height", image.Properties.PhotoHeight);
+                    addKVItem(items, "Type", image.Properties.Description);
                 }
 
-                alphaLabel1.Lines = items.ToArray();
+                alImageInfo.Lines = items.ToArray();
             }
-            alphaLabel1.Visible = !alphaLabel1.Visible;
-            imageInformationToolStripMenuItem.Checked = alphaLabel1.Visible;
-        }
-
-        private void FormGaku_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(imageSettings.FileName))
-                imageSettings.Save();
-        }
-
-        private void noneToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            imageSettings.BorderStyle = BorderStyle.None;
-            updateBorderStyle();
-        }
-
-        private void thinToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            imageSettings.BorderStyle = BorderStyle.Thin;
-            updateBorderStyle();
-        }
-
-        private void resizableToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            imageSettings.BorderStyle = BorderStyle.Resizable;
-            updateBorderStyle();
-        }
-
-        private void customToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            imageSettings.BorderStyle = BorderStyle.Custom;
-            updateBorderStyle();
+            alImageInfo.Visible = !alImageInfo.Visible;
+            imageInformationToolStripMenuItem.Checked = alImageInfo.Visible;
         }
 
         private void updateBorderStyle()
@@ -580,7 +410,7 @@ namespace Gaku
             }
         }
 
-        private void FormGaku_DragEnter(object sender, DragEventArgs e)
+        private void global_DragEnter(object sender, DragEventArgs e)
         {
             var allowedFormats = new [] { DataFormats.FileDrop, DataFormats.Bitmap, DataFormatsEx.URL };
 
@@ -588,18 +418,18 @@ namespace Gaku
                 e.Effect = DragDropEffects.Move;
         }
 
-        private void FormGaku_DragDrop(object sender, DragEventArgs e)
+        private void global_DragDrop(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
             {
                 var images = e.Data.GetData(DataFormats.FileDrop) as string[];
                 if (images.Length < 1) return;
-                OpenImage(images[0]);
+                openImage(images[0]);
             }
             else if (e.Data.GetDataPresent(DataFormatsEx.URL))
             {
                 var url = DataFormatsEx.GetDataString(e.Data, DataFormatsEx.URL);
-                OpenImageUrl(url);
+                openImageUrl(url);
             }
 
             else if (e.Data.GetDataPresent(DataFormats.Bitmap, true))
@@ -607,7 +437,7 @@ namespace Gaku
                 var bitmap = e.Data.GetData(DataFormats.Bitmap, true) as Bitmap;
                 var filename = GakuSettings.GetTempImageFilename();
                 bitmap.Save(filename, bitmap.RawFormat);
-                OpenImage(filename);
+                openImage(filename);
             }
 
             else
@@ -615,63 +445,17 @@ namespace Gaku
                 e.Effect = DragDropEffects.None;
             }
 
-                
         }
 
-        private void OpenImageUrl(string url)
+        private void openImageUrl(string url)
         {
             downloadFilename = GakuSettings.GetTempImageFilename(Path.GetExtension(url));
             pDownloading.Visible = true;
-            progressBar1.Value = 0;
-            webClient.DownloadFileAsync(new Uri(url), downloadFilename);
+            pbDownloading.Value = 0;
+            wcDownload.DownloadFileAsync(new Uri(url), downloadFilename);
         }
 
-        private void setSizeToImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            imageSettings.DisplayMode = DisplayMode.AutoFit;
-            imageSettings.FrameSize = GetAutoSize();
-            SetSize(imageSettings.FrameSize);
-            updateDisplayMode();
-        }
-
-        private void copyImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetImage(pictureBox1.Image);
-        }
-
-        private void pxToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var tsmi = sender as ToolStripMenuItem;
-            imageSettings.BorderWidth = int.Parse(tsmi.Tag as string);
-
-            pxToolStripMenuItem.Checked = tsmi == pxToolStripMenuItem;
-            pxToolStripMenuItem1.Checked = tsmi == pxToolStripMenuItem1;
-            pxToolStripMenuItem2.Checked = tsmi == pxToolStripMenuItem2;
-            pxToolStripMenuItem3.Checked = tsmi == pxToolStripMenuItem3;
-            pxToolStripMenuItem4.Checked = tsmi == pxToolStripMenuItem4;
-            pxToolStripMenuItem5.Checked = tsmi == pxToolStripMenuItem5;
-
-            updateBorderStyle();
-        }
-
-        private void blackToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            setBorderColor(Color.Black);
-        }
-
-        private void whiteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            setBorderColor(Color.White);
-        }
-
-        private void customToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            var cd = new ColorDialog();
-            cd.Color = imageSettings.BorderColor;
-            if(cd.ShowDialog() == DialogResult.OK)
-                setBorderColor(cd.Color);
-        }
-
+ 
         private void setBorderColor(Color newColor)
         {
             imageSettings.BorderColor = newColor;
@@ -681,19 +465,5 @@ namespace Gaku
             updateBorderStyle();
         }
 
-        private void button1_MouseEnter(object sender, EventArgs e)
-        {
-            button1.ForeColor = Color.Black;
-        }
-
-        private void button1_MouseLeave(object sender, EventArgs e)
-        {
-            button1.ForeColor = Color.White;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
     }
 }

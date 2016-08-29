@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormGaku));
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmsGlobal = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gakuV100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.imageInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -64,26 +64,26 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lTitle = new System.Windows.Forms.Label();
+            this.pbLogotype = new System.Windows.Forms.PictureBox();
+            this.pbMain = new System.Windows.Forms.PictureBox();
+            this.pbDownloading = new System.Windows.Forms.ProgressBar();
             this.lDownloading = new System.Windows.Forms.Label();
             this.pDownloading = new System.Windows.Forms.Panel();
             this.pBorder = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bClose = new System.Windows.Forms.Button();
+            this.alImageInfo = new Gaku.AlphaLabel();
             this.imgurLoading = new Gaku.ImgurLoading();
-            this.alphaLabel1 = new Gaku.AlphaLabel();
-            this.contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.cmsGlobal.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogotype)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
             this.pDownloading.SuspendLayout();
             this.pBorder.SuspendLayout();
             this.SuspendLayout();
             // 
-            // contextMenuStrip1
+            // cmsGlobal
             // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmsGlobal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gakuV100ToolStripMenuItem,
             this.toolStripMenuItem1,
             this.imageInformationToolStripMenuItem,
@@ -94,9 +94,9 @@
             this.setSizeToImageToolStripMenuItem,
             this.toolStripMenuItem2,
             this.exitToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(174, 192);
+            this.cmsGlobal.Name = "contextMenuStrip1";
+            this.cmsGlobal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsGlobal.Size = new System.Drawing.Size(174, 192);
             // 
             // gakuV100ToolStripMenuItem
             // 
@@ -363,58 +363,58 @@
             this.label3.Text = "label3";
             this.label3.Visible = false;
             // 
-            // label4
+            // lTitle
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
-            this.label4.Font = new System.Drawing.Font("Segoe UI Light", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(12, 9);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(143, 37);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Gaku v1.0.0";
-            this.label4.Visible = false;
+            this.lTitle.AutoSize = true;
+            this.lTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
+            this.lTitle.Font = new System.Drawing.Font("Segoe UI Light", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lTitle.ForeColor = System.Drawing.Color.White;
+            this.lTitle.Location = new System.Drawing.Point(12, 9);
+            this.lTitle.Name = "lTitle";
+            this.lTitle.Size = new System.Drawing.Size(143, 37);
+            this.lTitle.TabIndex = 4;
+            this.lTitle.Text = "Gaku v1.0.0";
+            this.lTitle.Visible = false;
             // 
-            // pictureBox2
+            // pbLogotype
             // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
-            this.pictureBox2.Image = global::Gaku.Properties.Resources.piksel_gaku;
-            this.pictureBox2.Location = new System.Drawing.Point(738, 424);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(102, 78);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 5;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Visible = false;
+            this.pbLogotype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbLogotype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
+            this.pbLogotype.Image = global::Gaku.Properties.Resources.piksel_gaku;
+            this.pbLogotype.Location = new System.Drawing.Point(738, 424);
+            this.pbLogotype.Name = "pbLogotype";
+            this.pbLogotype.Size = new System.Drawing.Size(102, 78);
+            this.pbLogotype.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbLogotype.TabIndex = 5;
+            this.pbLogotype.TabStop = false;
+            this.pbLogotype.Visible = false;
             // 
-            // pictureBox1
+            // pbMain
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Black;
-            this.pictureBox1.ContextMenuStrip = this.contextMenuStrip1;
-            this.pictureBox1.Image = global::Gaku.Properties.Resources._default;
-            this.pictureBox1.Location = new System.Drawing.Point(18, -213);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1000, 1000);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            this.pbMain.BackColor = System.Drawing.Color.Black;
+            this.pbMain.ContextMenuStrip = this.cmsGlobal;
+            this.pbMain.Image = global::Gaku.Properties.Resources._default;
+            this.pbMain.Location = new System.Drawing.Point(18, -213);
+            this.pbMain.Name = "pbMain";
+            this.pbMain.Size = new System.Drawing.Size(1000, 1000);
+            this.pbMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pbMain.TabIndex = 0;
+            this.pbMain.TabStop = false;
+            this.pbMain.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
+            this.pbMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
+            this.pbMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
+            this.pbMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
             // 
-            // progressBar1
+            // pbDownloading
             // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pbDownloading.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
-            this.progressBar1.Location = new System.Drawing.Point(24, 36);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(400, 10);
-            this.progressBar1.TabIndex = 7;
-            this.progressBar1.Value = 50;
+            this.pbDownloading.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
+            this.pbDownloading.Location = new System.Drawing.Point(24, 36);
+            this.pbDownloading.Name = "pbDownloading";
+            this.pbDownloading.Size = new System.Drawing.Size(400, 10);
+            this.pbDownloading.TabIndex = 7;
+            this.pbDownloading.Value = 50;
             // 
             // lDownloading
             // 
@@ -435,7 +435,7 @@
             this.pDownloading.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.pDownloading.BackColor = System.Drawing.Color.Black;
             this.pDownloading.Controls.Add(this.lDownloading);
-            this.pDownloading.Controls.Add(this.progressBar1);
+            this.pDownloading.Controls.Add(this.pbDownloading);
             this.pDownloading.Location = new System.Drawing.Point(208, 435);
             this.pDownloading.Name = "pDownloading";
             this.pDownloading.Size = new System.Drawing.Size(441, 67);
@@ -447,34 +447,54 @@
             this.pBorder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pBorder.Controls.Add(this.button1);
-            this.pBorder.Controls.Add(this.alphaLabel1);
-            this.pBorder.Controls.Add(this.pictureBox1);
+            this.pBorder.Controls.Add(this.bClose);
+            this.pBorder.Controls.Add(this.alImageInfo);
+            this.pBorder.Controls.Add(this.pbMain);
             this.pBorder.Location = new System.Drawing.Point(0, 0);
             this.pBorder.Name = "pBorder";
             this.pBorder.Size = new System.Drawing.Size(854, 515);
             this.pBorder.TabIndex = 10;
             // 
-            // button1
+            // bClose
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 14.25F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(817, -4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(35, 34);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "x";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            this.button1.MouseEnter += new System.EventHandler(this.button1_MouseEnter);
-            this.button1.MouseLeave += new System.EventHandler(this.button1_MouseLeave);
+            this.bClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.bClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
+            this.bClose.FlatAppearance.BorderSize = 0;
+            this.bClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+            this.bClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bClose.Font = new System.Drawing.Font("Segoe UI", 14.25F);
+            this.bClose.ForeColor = System.Drawing.Color.White;
+            this.bClose.Location = new System.Drawing.Point(817, -4);
+            this.bClose.Name = "bClose";
+            this.bClose.Size = new System.Drawing.Size(35, 34);
+            this.bClose.TabIndex = 2;
+            this.bClose.Text = "x";
+            this.bClose.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.bClose.UseVisualStyleBackColor = false;
+            this.bClose.Visible = false;
+            this.bClose.Click += new System.EventHandler(this.bClose_Click);
+            this.bClose.MouseEnter += new System.EventHandler(this.bClose_MouseEnter);
+            this.bClose.MouseLeave += new System.EventHandler(this.bClose_MouseLeave);
+            // 
+            // alImageInfo
+            // 
+            this.alImageInfo.Alpha = ((byte)(128));
+            this.alImageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alImageInfo.Font = new System.Drawing.Font("monofur", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alImageInfo.ForeColor = System.Drawing.Color.White;
+            this.alImageInfo.Lines = new string[] {
+        ""};
+            this.alImageInfo.Location = new System.Drawing.Point(12, 12);
+            this.alImageInfo.Name = "alImageInfo";
+            this.alImageInfo.Padding = new System.Windows.Forms.Padding(10);
+            this.alImageInfo.Size = new System.Drawing.Size(828, 490);
+            this.alImageInfo.TabIndex = 1;
+            this.alImageInfo.Visible = false;
+            this.alImageInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
+            this.alImageInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
+            this.alImageInfo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
             // 
             // imgurLoading
             // 
@@ -488,26 +508,6 @@
             this.imgurLoading.TabIndex = 6;
             this.imgurLoading.Visible = false;
             // 
-            // alphaLabel1
-            // 
-            this.alphaLabel1.Alpha = ((byte)(128));
-            this.alphaLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.alphaLabel1.Font = new System.Drawing.Font("monofur", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.alphaLabel1.ForeColor = System.Drawing.Color.White;
-            this.alphaLabel1.Lines = new string[] {
-        ""};
-            this.alphaLabel1.Location = new System.Drawing.Point(12, 12);
-            this.alphaLabel1.Name = "alphaLabel1";
-            this.alphaLabel1.Padding = new System.Windows.Forms.Padding(10);
-            this.alphaLabel1.Size = new System.Drawing.Size(828, 490);
-            this.alphaLabel1.TabIndex = 1;
-            this.alphaLabel1.Visible = false;
-            this.alphaLabel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.alphaLabel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.alphaLabel1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
-            // 
             // FormGaku
             // 
             this.AllowDrop = true;
@@ -515,11 +515,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(852, 514);
-            this.ContextMenuStrip = this.contextMenuStrip1;
+            this.ContextMenuStrip = this.cmsGlobal;
             this.Controls.Add(this.pDownloading);
             this.Controls.Add(this.imgurLoading);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.pbLogotype);
+            this.Controls.Add(this.lTitle);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -530,15 +530,14 @@
             this.Text = "Gaku";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormGaku_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.FormGaku_DragDrop);
-            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.FormGaku_DragEnter);
-            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
-            this.contextMenuStrip1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.global_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.global_DragEnter);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
+            this.cmsGlobal.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbLogotype)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMain)).EndInit();
             this.pDownloading.ResumeLayout(false);
             this.pBorder.ResumeLayout(false);
             this.pBorder.PerformLayout();
@@ -549,9 +548,9 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbMain;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ContextMenuStrip cmsGlobal;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -577,8 +576,8 @@
         private System.Windows.Forms.ToolStripMenuItem pxToolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem setSizeToImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lTitle;
+        private System.Windows.Forms.PictureBox pbLogotype;
         private System.Windows.Forms.ToolStripMenuItem hideCursorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openImagePathToolStripMenuItem;
@@ -586,13 +585,13 @@
         private System.Windows.Forms.ToolStripMenuItem uploadImageToImgurToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private ImgurLoading imgurLoading;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar pbDownloading;
         private System.Windows.Forms.Label lDownloading;
         private System.Windows.Forms.Panel pDownloading;
         private System.Windows.Forms.ToolStripMenuItem fileAssosciationsToolStripMenuItem;
         private System.Windows.Forms.Panel pBorder;
-        private AlphaLabel alphaLabel1;
-        private System.Windows.Forms.Button button1;
+        private AlphaLabel alImageInfo;
+        private System.Windows.Forms.Button bClose;
     }
 }
 
