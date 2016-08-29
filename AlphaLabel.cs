@@ -1,5 +1,4 @@
-﻿using ImageBlurFilter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -67,13 +66,8 @@ namespace Gaku
 
             var bitmap = getBitmap(pe.ClipRectangle);
 
-
-            // bitmap = bitmap.ImageBlurFilter(ExtBitmap.BlurType.Median3x3);
-
             g.FillRectangle(new SolidBrush(Color.FromArgb(Alpha, BackColor)), pe.ClipRectangle);
             g.DrawImage(bitmap, Point.Empty);
-            //g.DrawString(Text, Font, new SolidBrush(), new PointF(Padding.Left, Padding.Top));
-            //base.OnPaint(pe);
         }
 
         private Bitmap getBitmap(Rectangle rect)

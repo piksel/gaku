@@ -74,7 +74,6 @@
     <Compile Include="DataFormatsEx.cs" />
     <Compile Include="DisplayMode.cs" />
     <Compile Include="ExifMetaId.cs" />
-    <Compile Include="ExtBitmap.cs" />
     <Compile Include="FormGaku.cs">
       <SubType>Form</SubType>
     </Compile>
