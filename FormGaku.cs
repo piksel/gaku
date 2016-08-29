@@ -161,16 +161,16 @@ namespace Gaku
             var borderPadding = imageSettings.BorderStyle == BorderStyle.Custom ? imageSettings.BorderWidth * 2 : 0;
 
             int maxWidth = Screen.PrimaryScreen.WorkingArea.Width;
-            int maxHeight = Screen.PrimaryScreen.WorkingArea.Width;
+            int maxHeight = Screen.PrimaryScreen.WorkingArea.Height;
 
-            if (width > height || height > maxHeight)
+            if (height < maxHeight && (width >= height || height > maxHeight))
             {
                 if (width > maxWidth)
                 {
                     width = maxWidth;
                 }
-                double scale = ((double)width + borderPadding) / pbMain.Image.Width;
-                height = (int)(scale * height);
+                double scale = ((double)width + borderPadding) / pbMain.Image.PhysicalDimension.Width;
+                height = (int)Math.Round(scale * height);
             }
             else
             {
@@ -178,8 +178,8 @@ namespace Gaku
                 {
                     height = maxHeight;
                 }
-                double scale = ((double)height + borderPadding) / pbMain.Image.Height;
-                width = (int)(scale * width);
+                double scale = ((double)height + borderPadding) / pbMain.Image.PhysicalDimension.Height;
+                width = (int)Math.Round(scale * width);
             }
 
             return new Size(width, height);
@@ -356,12 +356,10 @@ namespace Gaku
             }
             Win32.SetWindowLong(Handle, Win32.WindowLongFlags.GWL_STYLE, wlstyle);
 
-            var customBorder = imageSettings.BorderStyle == BorderStyle.Custom ? imageSettings.BorderWidth : 0;
-
-            pBorder.Top = customBorder;
-            pBorder.Left = customBorder;
-            pBorder.Width = Width - (customBorder * 2);
-            pBorder.Height = Height - (customBorder * 2);
+            pBorder.Top = imageSettings.Padding;
+            pBorder.Left = imageSettings.Padding;
+            pBorder.Width = Width - (imageSettings.Padding * 2);
+            pBorder.Height = Height - (imageSettings.Padding * 2);
 
             noneToolStripMenuItem.Checked = imageSettings.BorderStyle == BorderStyle.None;
             thinToolStripMenuItem.Checked = imageSettings.BorderStyle == BorderStyle.Thin;
@@ -465,5 +463,9 @@ namespace Gaku
             updateBorderStyle();
         }
 
+        private void gakuV100ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://p1k.se/gaku");
+        }
     }
 }

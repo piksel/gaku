@@ -96,13 +96,14 @@
             this.exitToolStripMenuItem});
             this.cmsGlobal.Name = "contextMenuStrip1";
             this.cmsGlobal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsGlobal.Size = new System.Drawing.Size(174, 192);
+            this.cmsGlobal.Size = new System.Drawing.Size(174, 214);
             // 
             // gakuV100ToolStripMenuItem
             // 
             this.gakuV100ToolStripMenuItem.Name = "gakuV100ToolStripMenuItem";
             this.gakuV100ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.gakuV100ToolStripMenuItem.Text = "Gaku v1.0.0";
+            this.gakuV100ToolStripMenuItem.Click += new System.EventHandler(this.gakuV100ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -126,6 +127,7 @@
             // 
             // fileAssosciationsToolStripMenuItem
             // 
+            this.fileAssosciationsToolStripMenuItem.Enabled = false;
             this.fileAssosciationsToolStripMenuItem.Name = "fileAssosciationsToolStripMenuItem";
             this.fileAssosciationsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.fileAssosciationsToolStripMenuItem.Text = "File associations";

@@ -113,9 +113,8 @@ namespace Gaku
 
                 if (Keyboard.Modifiers.HasFlag(ModKeys.Shift))
                 {
-                    float borderPadding = imageSettings.BorderStyle == BorderStyle.Custom ? imageSettings.BorderWidth * 2 : 0;
-                    double scale = ((double)newHeight + borderPadding) / pbMain.Image.Height;
-                    newWidth = (int)((scale * pbMain.Image.Width) - borderPadding * 2);
+                    double scale = ((double)newHeight + (float)imageSettings.Padding) / pbMain.Image.Height;
+                    newWidth = (int)((scale * pbMain.Image.Width) - (float)imageSettings.Padding * 2);
                 }
 
                 Width = newWidth;

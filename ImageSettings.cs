@@ -23,6 +23,9 @@ namespace Gaku
         public int BorderWidth { get; set; } = 2;
 
         [YamlIgnore]
+        public int Padding { get { return BorderStyle == BorderStyle.Custom ? BorderWidth : 0; } }
+
+        [YamlIgnore]
         public Color BorderColor { get; set; } = Color.Black;
 
         [YamlMember(Alias = "BorderColor")]
@@ -82,6 +85,7 @@ namespace Gaku
                 return _index;
             }
         }
+
 
 
         static string SettingsFilePath(string filename)
