@@ -65,8 +65,27 @@ namespace Gaku
                 var newX = pbMain.Left - deltaX;
                 var newY = pbMain.Top - deltaY;
 
-                if (newX > 0) newX = 0;
-                if (newY > 0) newY = 0;
+                if (pbMain.Width > Width)
+                {
+                    var minX = Width - pbMain.Width;
+                    if (newX > 0) newX = 0;
+                    if (newX < minX) newX = minX;
+                }
+                else
+                {
+
+                }
+
+                if (pbMain.Height > Height)
+                {
+                    var minY = Height - pbMain.Height;
+                    if (newY > 0) newY = 0;
+                    if (newY < minY) newY = minY;
+                }
+                else
+                {
+
+                }
 
                 pbMain.Left = newX;
                 pbMain.Top = newY;

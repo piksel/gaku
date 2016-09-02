@@ -113,14 +113,20 @@ namespace Gaku
             imageSettings = ImageSettings.ForFile(imageFile);
             pbMain.Location = imageSettings.ImageOffset;
             zoom = imageSettings.Zoom;
-            updateZoom();
+            updateZoom(initial: true);
             updateBorderStyle();
             if (imageSettings.New)
             {
-                if (imageSettings.DisplayMode == DisplayMode.AutoFit)
-                {
-                    imageSettings.FrameSize = getAutoSize();
-                }
+
+                
+                imageSettings.FrameSize = getAutoSize();
+                
+            }
+
+            if (imageSettings.DisplayMode != DisplayMode.AutoFit)
+            {
+                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
+
             }
 
             setSize(imageSettings.FrameSize);
@@ -191,7 +197,7 @@ namespace Gaku
             Height = frameSize.Height;
         }
 
-        private void updateZoom(int delta = 0)
+        private void updateZoom(int delta = 0, bool initial = false)
         {
             var oldZoom = zoom;
             while (delta != 0)
@@ -221,8 +227,20 @@ namespace Gaku
             }
             label3.Text = zoom.ToString("F3");
 
+            var oldWidth = pbMain.Width;
+            var oldHeight = pbMain.Height;
+
             pbMain.Width = (int)(zoom * pbMain.Image.Width);
             pbMain.Height = (int)(zoom * pbMain.Image.Height);
+
+            if (!initial)
+            {
+                var diffX = pbMain.Width - oldWidth;
+                var diffY = pbMain.Height - oldHeight;
+
+                pbMain.Left = pbMain.Left - (diffX / 2);
+                pbMain.Top = pbMain.Top - (diffY / 2);
+            }
         }
 
         protected override CreateParams CreateParams
@@ -264,12 +282,12 @@ namespace Gaku
             if(imageSettings.DisplayMode == DisplayMode.AutoFit)
             {
                 pbMain.Dock = DockStyle.Fill;
-                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
+                pbMain.SizeMode = PictureBoxSizeMode.AutoSize;
             }
             else
             {
                 pbMain.Dock = DockStyle.None;
-                pbMain.SizeMode = PictureBoxSizeMode.AutoSize;
+                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
 
             }
         }
@@ -467,5 +485,13 @@ namespace Gaku
         {
             Process.Start("http://p1k.se/gaku");
         }
+
+
+        private void fileAssosciationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ffa = new FormFileAssociations();
+            ffa.ShowDialog();
+        }
+
     }
 }

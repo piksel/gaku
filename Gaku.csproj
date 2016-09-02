@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <AssemblyVersion>0.4.16242.417</AssemblyVersion>
+    <AssemblyVersion>0.4.16245.447</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -74,6 +74,12 @@
     <Compile Include="DataFormatsEx.cs" />
     <Compile Include="DisplayMode.cs" />
     <Compile Include="ExifMetaId.cs" />
+    <Compile Include="FormFileAssociations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFileAssociations.Designer.cs">
+      <DependentUpon>FormFileAssociations.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormGaku.Binding.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -190,6 +196,9 @@
     <Compile Include="TagLib\Xmp\XmpNodeVisitor.cs" />
     <Compile Include="TagLib\Xmp\XmpTag.cs" />
     <Compile Include="Win32.cs" />
+    <EmbeddedResource Include="FormFileAssociations.resx">
+      <DependentUpon>FormFileAssociations.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormGaku.resx">
       <DependentUpon>FormGaku.cs</DependentUpon>
     </EmbeddedResource>
@@ -224,6 +233,8 @@
     <None Include="piksel-gaku.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\gaku-document.ico" />
+    <None Include="document.ico" />
     <Content Include="icon.ico" />
     <Content Include="pKopwXp.gif" />
     <None Include="Resources\upload-done.png" />

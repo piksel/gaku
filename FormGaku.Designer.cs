@@ -96,7 +96,7 @@
             this.exitToolStripMenuItem});
             this.cmsGlobal.Name = "contextMenuStrip1";
             this.cmsGlobal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsGlobal.Size = new System.Drawing.Size(174, 214);
+            this.cmsGlobal.Size = new System.Drawing.Size(174, 192);
             // 
             // gakuV100ToolStripMenuItem
             // 
@@ -127,10 +127,10 @@
             // 
             // fileAssosciationsToolStripMenuItem
             // 
-            this.fileAssosciationsToolStripMenuItem.Enabled = false;
             this.fileAssosciationsToolStripMenuItem.Name = "fileAssosciationsToolStripMenuItem";
             this.fileAssosciationsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
             this.fileAssosciationsToolStripMenuItem.Text = "File associations";
+            this.fileAssosciationsToolStripMenuItem.Click += new System.EventHandler(this.fileAssosciationsToolStripMenuItem_Click);
             // 
             // hideCursorToolStripMenuItem
             // 
@@ -456,6 +456,9 @@
             this.pBorder.Name = "pBorder";
             this.pBorder.Size = new System.Drawing.Size(854, 515);
             this.pBorder.TabIndex = 10;
+            this.pBorder.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
+            this.pBorder.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
+            this.pBorder.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
             // 
             // bClose
             // 
@@ -484,7 +487,7 @@
             this.alImageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.alImageInfo.Font = new System.Drawing.Font("monofur", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alImageInfo.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.alImageInfo.ForeColor = System.Drawing.Color.White;
             this.alImageInfo.Lines = new string[] {
         ""};
