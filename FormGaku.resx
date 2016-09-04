@@ -120,6 +120,30 @@
   <metadata name="cmsGlobal.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="alHelp.Text" xml:space="preserve">
+    <value>Gaku has two display modes, *Autosize* and *Custom.*
+Use[Double Click]to change between them.
+
+_In both modes:_
+
+[Left Click]+[Drag]        Moves the canvas
+[Left Click]+[Alt]+[Drag]  Resizes the display canvas
+                           (hold shift for locking to aspect ratio)
+                             
+_Custom mode only:_
+
+[Left Click]+[Shift]+[Drag] Change image zoom
+  or [Scrolling]                
+[Left Click]+[Ctrl] +[Drag] Move picture inside canvas
+  or [Middle Click ]+[Drag]
+
+ 
+Use [Right Click] to show the menu for more settings.
+
+To view an image, either[drag it to the Gaku window]or
+set it as your default image viewer using the[Right Click Menu]
+and selecting[Settings]-&gt;[File associations]</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

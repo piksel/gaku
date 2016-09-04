@@ -10,8 +10,10 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Gaku
 {
-    public class ImageSettings
+    public class ImageSettings: GakuSettings
     {
+        public void Save() { Save(SettingsFilePath(FileName)); }
+
         public string FileName { get; set; }
         public double Zoom { get; set; } = 1.0;
         public Point ImageOffset { get; set; } = new Point(0, 0);
@@ -42,32 +44,13 @@ namespace Gaku
         [YamlIgnore]
         public bool New { get; set; }
 
-        public void Save()
-        {
-            var settingsFile = SettingsFilePath(FileName);
-            var yaml = new Serializer(namingConvention: new CamelCaseNamingConvention());
-
-            using (var sw = new StreamWriter(settingsFile))
-            {
-                yaml.Serialize(sw, this);
-            }
-        }
-
         public static ImageSettings Default { get { return ForFile(string.Empty); } }
 
         public static ImageSettings ForFile(string file)
         {
             var settingsFile = SettingsFilePath(file);
             if (File.Exists(settingsFile)) {
-                var yaml = new Deserializer(namingConvention: new CamelCaseNamingConvention());
-
-                using(var sr = new StreamReader(settingsFile))
-                {
-                    var settings = yaml.Deserialize<ImageSettings>(sr);
-                    if (settings != null)
-                        return settings;
-                }
-
+                return Load<ImageSettings>(settingsFile);
             }
 
             return new ImageSettings() { FileName = file, DisplayMode = DisplayMode.AutoFit, New = true };
@@ -111,48 +94,5 @@ namespace Gaku
         }
     }
 
-    public class SettingsIndex: GakuSettings
-    {
-        public Dictionary<string, Guid> Files { get; set; }
 
-        static string IndexFile { get { return Path.Combine(RootPath, "index.yaml"); } }
-
-        public Guid GetGuid(string filename)
-        {
-            if(!Files.ContainsKey(filename))
-            {
-                Files.Add(filename, Guid.NewGuid());
-                Save();
-            }
-            return Files[filename];
-        }
-
-        public static SettingsIndex Load()
-        {
-            if (File.Exists(IndexFile))
-            {
-                var yaml = new Deserializer(namingConvention: new CamelCaseNamingConvention());
-
-                using (var sr = new StreamReader(IndexFile))
-                {
-                    var index = yaml.Deserialize<SettingsIndex>(sr);
-                    return index;
-                }
-            }
-            else
-            {
-                return new SettingsIndex() { Files = new Dictionary<string, Guid>() };
-            }
-        }
-
-        public void Save()
-        {
-            var yaml = new Serializer(namingConvention: new CamelCaseNamingConvention());
-
-            using (var sw = new StreamWriter(IndexFile))
-            {
-                yaml.Serialize(sw, this);
-            }
-        }
-    }
 }

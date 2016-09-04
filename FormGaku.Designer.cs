@@ -33,8 +33,12 @@
             this.cmsGlobal = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.gakuV100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.keepAspectRatioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fastTextDrawingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
             this.fileAssosciationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideCursorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,8 +76,11 @@
             this.pDownloading = new System.Windows.Forms.Panel();
             this.pBorder = new System.Windows.Forms.Panel();
             this.bClose = new System.Windows.Forms.Button();
-            this.alImageInfo = new Gaku.AlphaLabel();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.resetImageSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imgurLoading = new Gaku.ImgurLoading();
+            this.alHelp = new Gaku.AlphaLabel();
+            this.alImageInfo = new Gaku.AlphaLabel();
             this.cmsGlobal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogotype)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
@@ -83,52 +90,86 @@
             // 
             // cmsGlobal
             // 
+            this.cmsGlobal.BackColor = System.Drawing.SystemColors.Control;
             this.cmsGlobal.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gakuV100ToolStripMenuItem,
             this.toolStripMenuItem1,
-            this.imageInformationToolStripMenuItem,
+            this.helpToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.hideCursorToolStripMenuItem,
             this.toolsToolStripMenuItem,
+            this.toolStripMenuItem5,
+            this.imageInformationToolStripMenuItem,
             this.borderTypeToolStripMenuItem,
             this.setSizeToImageToolStripMenuItem,
+            this.resetImageSettingsToolStripMenuItem,
             this.toolStripMenuItem2,
             this.exitToolStripMenuItem});
             this.cmsGlobal.Name = "contextMenuStrip1";
-            this.cmsGlobal.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsGlobal.Size = new System.Drawing.Size(174, 192);
+            this.cmsGlobal.ShowCheckMargin = true;
+            this.cmsGlobal.ShowImageMargin = false;
+            this.cmsGlobal.Size = new System.Drawing.Size(183, 264);
             // 
             // gakuV100ToolStripMenuItem
             // 
             this.gakuV100ToolStripMenuItem.Name = "gakuV100ToolStripMenuItem";
-            this.gakuV100ToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.gakuV100ToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.gakuV100ToolStripMenuItem.Text = "Gaku v1.0.0";
             this.gakuV100ToolStripMenuItem.Click += new System.EventHandler(this.gakuV100ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(170, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(179, 6);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.helpToolStripMenuItem.Text = "Help";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // imageInformationToolStripMenuItem
             // 
             this.imageInformationToolStripMenuItem.Name = "imageInformationToolStripMenuItem";
-            this.imageInformationToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.imageInformationToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.imageInformationToolStripMenuItem.Text = "Image information";
             this.imageInformationToolStripMenuItem.Click += new System.EventHandler(this.imageInformationToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.keepAspectRatioToolStripMenuItem,
+            this.fastTextDrawingToolStripMenuItem,
+            this.toolStripMenuItem4,
             this.fileAssosciationsToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // keepAspectRatioToolStripMenuItem
+            // 
+            this.keepAspectRatioToolStripMenuItem.Name = "keepAspectRatioToolStripMenuItem";
+            this.keepAspectRatioToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.keepAspectRatioToolStripMenuItem.Text = "Keep aspect ratio";
+            this.keepAspectRatioToolStripMenuItem.Click += new System.EventHandler(this.keepAspectRatioToolStripMenuItem_Click);
+            // 
+            // fastTextDrawingToolStripMenuItem
+            // 
+            this.fastTextDrawingToolStripMenuItem.Name = "fastTextDrawingToolStripMenuItem";
+            this.fastTextDrawingToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.fastTextDrawingToolStripMenuItem.Text = "Fast text drawing";
+            this.fastTextDrawingToolStripMenuItem.Click += new System.EventHandler(this.fastTextDrawingToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(161, 6);
             // 
             // fileAssosciationsToolStripMenuItem
             // 
             this.fileAssosciationsToolStripMenuItem.Name = "fileAssosciationsToolStripMenuItem";
-            this.fileAssosciationsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.fileAssosciationsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.fileAssosciationsToolStripMenuItem.Text = "File associations";
             this.fileAssosciationsToolStripMenuItem.Click += new System.EventHandler(this.fileAssosciationsToolStripMenuItem_Click);
             // 
@@ -136,7 +177,7 @@
             // 
             this.hideCursorToolStripMenuItem.CheckOnClick = true;
             this.hideCursorToolStripMenuItem.Name = "hideCursorToolStripMenuItem";
-            this.hideCursorToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.hideCursorToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.hideCursorToolStripMenuItem.Text = "Hide cursor";
             this.hideCursorToolStripMenuItem.Click += new System.EventHandler(this.hideCursorToolStripMenuItem_Click);
             // 
@@ -147,7 +188,7 @@
             this.copyImageToolStripMenuItem,
             this.uploadImageToImgurToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // openImagePathToolStripMenuItem
@@ -182,7 +223,7 @@
             this.customColorToolStripMenuItem,
             this.customWidthToolStripMenuItem});
             this.borderTypeToolStripMenuItem.Name = "borderTypeToolStripMenuItem";
-            this.borderTypeToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.borderTypeToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.borderTypeToolStripMenuItem.Text = "Border type";
             // 
             // noneToolStripMenuItem
@@ -313,19 +354,19 @@
             // setSizeToImageToolStripMenuItem
             // 
             this.setSizeToImageToolStripMenuItem.Name = "setSizeToImageToolStripMenuItem";
-            this.setSizeToImageToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.setSizeToImageToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.setSizeToImageToolStripMenuItem.Text = "Resize to image";
             this.setSizeToImageToolStripMenuItem.Click += new System.EventHandler(this.setSizeToImageToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(170, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(179, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -367,25 +408,30 @@
             // 
             // lTitle
             // 
-            this.lTitle.AutoSize = true;
+            this.lTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
             this.lTitle.Font = new System.Drawing.Font("Segoe UI Light", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lTitle.ForeColor = System.Drawing.Color.White;
-            this.lTitle.Location = new System.Drawing.Point(12, 9);
+            this.lTitle.Location = new System.Drawing.Point(42, -2);
             this.lTitle.Name = "lTitle";
-            this.lTitle.Size = new System.Drawing.Size(143, 37);
+            this.lTitle.Size = new System.Drawing.Size(768, 37);
             this.lTitle.TabIndex = 4;
             this.lTitle.Text = "Gaku v1.0.0";
+            this.lTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lTitle.Visible = false;
+            this.lTitle.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
+            this.lTitle.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
+            this.lTitle.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
             // 
             // pbLogotype
             // 
             this.pbLogotype.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbLogotype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
             this.pbLogotype.Image = global::Gaku.Properties.Resources.piksel_gaku;
-            this.pbLogotype.Location = new System.Drawing.Point(738, 424);
+            this.pbLogotype.Location = new System.Drawing.Point(733, 394);
             this.pbLogotype.Name = "pbLogotype";
-            this.pbLogotype.Size = new System.Drawing.Size(102, 78);
+            this.pbLogotype.Size = new System.Drawing.Size(102, 103);
             this.pbLogotype.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbLogotype.TabIndex = 5;
             this.pbLogotype.TabStop = false;
@@ -450,7 +496,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pBorder.Controls.Add(this.bClose);
+            this.pBorder.Controls.Add(this.alHelp);
             this.pBorder.Controls.Add(this.alImageInfo);
+            this.pBorder.Controls.Add(this.pbLogotype);
             this.pBorder.Controls.Add(this.pbMain);
             this.pBorder.Location = new System.Drawing.Point(0, 0);
             this.pBorder.Name = "pBorder";
@@ -467,9 +515,9 @@
             this.bClose.FlatAppearance.BorderSize = 0;
             this.bClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
             this.bClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bClose.Font = new System.Drawing.Font("Segoe UI", 14.25F);
+            this.bClose.Font = new System.Drawing.Font("Consolas", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bClose.ForeColor = System.Drawing.Color.White;
-            this.bClose.Location = new System.Drawing.Point(817, -4);
+            this.bClose.Location = new System.Drawing.Point(816, 1);
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(35, 34);
             this.bClose.TabIndex = 2;
@@ -481,25 +529,16 @@
             this.bClose.MouseEnter += new System.EventHandler(this.bClose_MouseEnter);
             this.bClose.MouseLeave += new System.EventHandler(this.bClose_MouseLeave);
             // 
-            // alImageInfo
+            // toolStripMenuItem5
             // 
-            this.alImageInfo.Alpha = ((byte)(128));
-            this.alImageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.alImageInfo.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.alImageInfo.ForeColor = System.Drawing.Color.White;
-            this.alImageInfo.Lines = new string[] {
-        ""};
-            this.alImageInfo.Location = new System.Drawing.Point(12, 12);
-            this.alImageInfo.Name = "alImageInfo";
-            this.alImageInfo.Padding = new System.Windows.Forms.Padding(10);
-            this.alImageInfo.Size = new System.Drawing.Size(828, 490);
-            this.alImageInfo.TabIndex = 1;
-            this.alImageInfo.Visible = false;
-            this.alImageInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
-            this.alImageInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
-            this.alImageInfo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(179, 6);
+            // 
+            // resetImageSettingsToolStripMenuItem
+            // 
+            this.resetImageSettingsToolStripMenuItem.Name = "resetImageSettingsToolStripMenuItem";
+            this.resetImageSettingsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.resetImageSettingsToolStripMenuItem.Text = "Reset image settings";
             // 
             // imgurLoading
             // 
@@ -513,6 +552,78 @@
             this.imgurLoading.TabIndex = 6;
             this.imgurLoading.Visible = false;
             // 
+            // alHelp
+            // 
+            this.alHelp.Alpha = ((byte)(128));
+            this.alHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alHelp.FastTextDraw = false;
+            this.alHelp.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alHelp.ForeColor = System.Drawing.Color.White;
+            this.alHelp.HightlightColor = System.Drawing.Color.HotPink;
+            this.alHelp.Lines = new string[] {
+        "Gaku has two display modes, *Autosize* and *Custom.*",
+        "Use[Double Click]to change between them.",
+        "",
+        "_In both modes:_",
+        "",
+        "[Left Click]+[Drag]        Moves the canvas",
+        "[Left Click]+[Alt]+[Drag]  Resizes the display canvas",
+        "                           (hold shift for locking to aspect ratio)",
+        "                             ",
+        "_Custom mode only:_",
+        "",
+        "[Left Click]+[Shift]+[Drag] Change image zoom",
+        "  or [Scrolling]                ",
+        "[Left Click]+[Ctrl] +[Drag] Move picture inside canvas",
+        "  or [Middle Click ]+[Drag]",
+        "",
+        " ",
+        "Use [Right Click] to show the menu for more settings.",
+        "",
+        "To view an image, either[drag it to the Gaku window]or",
+        "set it as your default image viewer using the[Right Click Menu]",
+        "and selecting[Settings]->[File associations]"};
+            this.alHelp.Location = new System.Drawing.Point(12, 38);
+            this.alHelp.Name = "alHelp";
+            this.alHelp.Padding = new System.Windows.Forms.Padding(10);
+            this.alHelp.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.alHelp.SimpleRichFormatting = true;
+            this.alHelp.Size = new System.Drawing.Size(827, 465);
+            this.alHelp.TabIndex = 3;
+            this.alHelp.Text = resources.GetString("alHelp.Text");
+            this.alHelp.Visible = false;
+            this.alHelp.WrapPadding = 1;
+            this.alHelp.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
+            this.alHelp.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
+            this.alHelp.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
+            // 
+            // alImageInfo
+            // 
+            this.alImageInfo.Alpha = ((byte)(128));
+            this.alImageInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alImageInfo.FastTextDraw = false;
+            this.alImageInfo.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.alImageInfo.ForeColor = System.Drawing.Color.White;
+            this.alImageInfo.HightlightColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(75)))), ((int)(((byte)(168)))));
+            this.alImageInfo.Lines = new string[] {
+        ""};
+            this.alImageInfo.Location = new System.Drawing.Point(12, 12);
+            this.alImageInfo.Name = "alImageInfo";
+            this.alImageInfo.Padding = new System.Windows.Forms.Padding(10);
+            this.alImageInfo.ShadowColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.alImageInfo.SimpleRichFormatting = false;
+            this.alImageInfo.Size = new System.Drawing.Size(828, 490);
+            this.alImageInfo.TabIndex = 1;
+            this.alImageInfo.Visible = false;
+            this.alImageInfo.WrapPadding = 18;
+            this.alImageInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
+            this.alImageInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
+            this.alImageInfo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
+            // 
             // FormGaku
             // 
             this.AllowDrop = true;
@@ -523,11 +634,10 @@
             this.ContextMenuStrip = this.cmsGlobal;
             this.Controls.Add(this.pDownloading);
             this.Controls.Add(this.imgurLoading);
-            this.Controls.Add(this.pbLogotype);
-            this.Controls.Add(this.lTitle);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.lTitle);
             this.Controls.Add(this.pBorder);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -597,6 +707,13 @@
         private System.Windows.Forms.Panel pBorder;
         private AlphaLabel alImageInfo;
         private System.Windows.Forms.Button bClose;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private AlphaLabel alHelp;
+        private System.Windows.Forms.ToolStripMenuItem keepAspectRatioToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fastTextDrawingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem resetImageSettingsToolStripMenuItem;
     }
 }
 

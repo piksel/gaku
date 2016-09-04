@@ -28,6 +28,7 @@ namespace Gaku
         Point correction;
 
         ImageSettings imageSettings;
+        GeneralSettings settings;
 
         double zoom = 1;
 
@@ -37,6 +38,8 @@ namespace Gaku
         private readonly int WHEEL_DELTA = 120;
 
         string imageFile = "";
+
+        readonly Color GakuPink = Color.FromArgb(255, 75, 168);
 
         IImage imgurlImage;
         private WebClient wcDownload;
@@ -52,6 +55,8 @@ namespace Gaku
             wcDownload.DownloadFileCompleted += wcDownload_DownloadFileCompleted;
             wcDownload.DownloadProgressChanged += wcDownload_DownloadProgressChanged;
 
+            settings = GeneralSettings.Load();
+
             var args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
@@ -60,7 +65,7 @@ namespace Gaku
             else
             {
                 pbMain.SizeMode = PictureBoxSizeMode.Zoom;
-                BackColor = Color.FromArgb(255, 255, 75, 168);
+                BackColor = GakuPink;
                 pbMain.Dock = DockStyle.Fill;
                 pbMain.BackColor = BackColor;
                 lTitle.Visible = true;
@@ -77,6 +82,20 @@ namespace Gaku
 
             MouseWheel += global_MouseWheel;
             pbMain.MouseWheel += global_MouseWheel;
+            alHelp.MouseWheel += global_MouseWheel;
+            alImageInfo.MouseWheel += global_MouseWheel;
+
+            if (settings.FirstStart)
+            {
+                settings.FirstStart = false;
+                settings.Save();
+                ToggleHelp(true);
+            }
+
+            alHelp.FastTextDraw = settings.FastTextDraw;
+            alImageInfo.FastTextDraw = settings.FastTextDraw;
+
+            updateSettingsMenu();
         }
 
         private void wcDownload_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -109,6 +128,7 @@ namespace Gaku
             pbLogotype.Visible = false;
             bClose.Visible = false;
             BackColor = Color.Black;
+            pbMain.BackColor = Color.Black;
 
             imageSettings = ImageSettings.ForFile(imageFile);
             pbMain.Location = imageSettings.ImageOffset;
@@ -117,16 +137,16 @@ namespace Gaku
             updateBorderStyle();
             if (imageSettings.New)
             {
-
-                
                 imageSettings.FrameSize = getAutoSize();
-                
             }
 
             if (imageSettings.DisplayMode != DisplayMode.AutoFit)
             {
                 pbMain.SizeMode = PictureBoxSizeMode.Zoom;
-
+            }
+            else
+            {
+                pbMain.SizeMode = PictureBoxSizeMode.AutoSize;
             }
 
             setSize(imageSettings.FrameSize);
@@ -148,6 +168,8 @@ namespace Gaku
 
             updateDisplayMode();
             updateIcon();
+
+            alImageInfo.Visible = false; imageInformationToolStripMenuItem.Checked = false;
 
         }
 
@@ -199,6 +221,8 @@ namespace Gaku
 
         private void updateZoom(int delta = 0, bool initial = false)
         {
+            if (imageSettings.DisplayMode == DisplayMode.AutoFit) return;
+
             var oldZoom = zoom;
             while (delta != 0)
             {
@@ -248,7 +272,7 @@ namespace Gaku
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.Style = (int)(Win32.WindowStyle.WS_VISIBLE );
+                cp.Style = (int)(Win32.WindowStyle.WS_VISIBLE);
                 //cp.ExStyle |= 0x80000 /* WS_EX_LAYERED */ | 0x20 /* WS_EX_TRANSPARENT */ | 0x80/* WS_EX_TOOLWINDOW */;
                 return cp;
             }
@@ -272,22 +296,22 @@ namespace Gaku
 
         private void ToggleDisplayMode()
         {
-            imageSettings.DisplayMode = imageSettings.DisplayMode == 
+            imageSettings.DisplayMode = imageSettings.DisplayMode ==
                 DisplayMode.AutoFit ? DisplayMode.PanMoveCrop : DisplayMode.AutoFit;
             updateDisplayMode();
         }
 
         private void updateDisplayMode()
         {
-            if(imageSettings.DisplayMode == DisplayMode.AutoFit)
+            if (imageSettings.DisplayMode == DisplayMode.AutoFit)
             {
                 pbMain.Dock = DockStyle.Fill;
-                pbMain.SizeMode = PictureBoxSizeMode.AutoSize;
+                pbMain.SizeMode = PictureBoxSizeMode.Zoom; //pbMain.Image.Width == pbMain.Image.Height ? PictureBoxSizeMode.StretchImage : PictureBoxSizeMode.AutoSize;
             }
             else
             {
                 pbMain.Dock = DockStyle.None;
-                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
+                pbMain.SizeMode = PictureBoxSizeMode.AutoSize;
 
             }
         }
@@ -343,6 +367,8 @@ namespace Gaku
             }
             alImageInfo.Visible = !alImageInfo.Visible;
             imageInformationToolStripMenuItem.Checked = alImageInfo.Visible;
+
+            alHelp.Visible = false; helpToolStripMenuItem.Checked = false;
         }
 
         private void updateBorderStyle()
@@ -419,7 +445,7 @@ namespace Gaku
             }
             catch (Exception x)
             {
-                if(MessageBox.Show("Error uploading image to Imgur:\n" + x.Message, "Upload failed", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
+                if (MessageBox.Show("Error uploading image to Imgur:\n" + x.Message, "Upload failed", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Retry)
                 {
                     uploadImageToImgurToolStripMenuItem_Click(sender, e);
                 }
@@ -428,9 +454,9 @@ namespace Gaku
 
         private void global_DragEnter(object sender, DragEventArgs e)
         {
-            var allowedFormats = new [] { DataFormats.FileDrop, DataFormats.Bitmap, DataFormatsEx.URL };
+            var allowedFormats = new[] { DataFormats.FileDrop, DataFormats.Bitmap, DataFormatsEx.URL };
 
-            if(e.Data.GetFormats(true).Any(f => allowedFormats.Contains(f)))
+            if (e.Data.GetFormats(true).Any(f => allowedFormats.Contains(f)))
                 e.Effect = DragDropEffects.Move;
         }
 
@@ -471,7 +497,7 @@ namespace Gaku
             wcDownload.DownloadFileAsync(new Uri(url), downloadFilename);
         }
 
- 
+
         private void setBorderColor(Color newColor)
         {
             imageSettings.BorderColor = newColor;
@@ -493,5 +519,67 @@ namespace Gaku
             ffa.ShowDialog();
         }
 
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToggleHelp();
+        }
+
+        private void ToggleHelp(bool? newState = null)
+        {
+            if(!newState.HasValue)
+                newState = !alHelp.Visible;
+
+            helpToolStripMenuItem.Checked = newState.Value;
+            if (string.IsNullOrEmpty(imageFile))
+            {
+                alHelp.BackColor = Color.Black;
+
+                alHelp.Top = 38;
+                alHelp.Height = Height - 50;
+                //alHelp.BackColor = GakuPink;
+                alHelp.Alpha = 200;
+                alHelp.HightlightColor = GakuPink;
+                //alHelp.ForeColor = Color.HotPink;
+                //alHelp.ShadowColor = GakuPink;
+                //pbMain.Visible = !alHelp.Visible;
+                //BackColor = alHelp.Visible ? Color.Black : GakuPink;
+                pbLogotype.Visible = (!settings.FastTextDraw && newState.Value);
+            }
+            else
+            {
+                alHelp.Top = 12;
+                alHelp.Height = Height - 24;
+                alHelp.Alpha = 180;
+                alHelp.BackColor = Color.Black;
+                alHelp.HightlightColor = Color.HotPink;
+                alHelp.ForeColor = Color.White;
+            }
+
+            alHelp.Visible = newState.Value;
+            alImageInfo.Visible = false; imageInformationToolStripMenuItem.Checked = false;
+        }
+
+        private void global_MouseDown(object sender, MouseEventArgs e) { handleMouseDown(sender, e); }
+        private void global_MouseWheel(object sender, MouseEventArgs e) { handleMouseWheel(sender, e); }
+        private void global_MouseMove(object sender, MouseEventArgs e) { handleMouseMove(sender, e); }
+        private void global_MouseUp(object sender, MouseEventArgs e) { handleMouseUp(sender, e); }
+
+        private void keepAspectRatioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.KeepAspectRatio = !settings.KeepAspectRatio;
+            updateSettingsMenu();
+        }
+
+        private void updateSettingsMenu()
+        {
+            keepAspectRatioToolStripMenuItem.Checked = settings.KeepAspectRatio;
+            fastTextDrawingToolStripMenuItem.Checked = settings.FastTextDraw;
+        }
+
+        private void fastTextDrawingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            settings.FastTextDraw = !settings.FastTextDraw;
+            updateSettingsMenu();
+        }
     }
 }

@@ -83,6 +83,7 @@ namespace Gaku
         {
             if (!string.IsNullOrEmpty(imageSettings.FileName))
                 imageSettings.Save();
+            settings.Save();
         }
 
         private void noneToolStripMenuItem_Click(object sender, EventArgs e)

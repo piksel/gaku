@@ -13,14 +13,14 @@ namespace Gaku
 
     partial class FormGaku
     {
-        private void global_MouseDown(object sender, MouseEventArgs e)
+        private void handleMouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left) return;
+            if (e.Button == MouseButtons.Right) return;
 
             moveOrigin = localDelta ? (sender as Control).PointToClient(e.Location) : e.Location;
             rectOrigin = new Rectangle(Location, Size);
 
-            if (Keyboard.Modifiers.HasFlag(ModKeys.Control))
+            if (Keyboard.Modifiers.HasFlag(ModKeys.Control) || e.Button == MouseButtons.Middle)
             {
                 if (imageSettings.DisplayMode == DisplayMode.PanMoveCrop)
                     moveMode = MoveMode.Image;
@@ -49,12 +49,12 @@ namespace Gaku
 
         }
 
-        private void global_MouseWheel(object sender, MouseEventArgs e)
+        private void handleMouseWheel(object sender, MouseEventArgs e)
         {
             updateZoom(e.Delta / WHEEL_DELTA);
         }
 
-        private void global_MouseMove(object sender, MouseEventArgs e)
+        private void handleMouseMove(object sender, MouseEventArgs e)
         {
             var location = localDelta ? (sender as Control).PointToClient(e.Location) : e.Location;
             var deltaX = moveOrigin.X - location.X;
@@ -98,12 +98,6 @@ namespace Gaku
             }
             else if (moveMode == MoveMode.Size)
             {
-                if (Keyboard.Modifiers.HasFlag(ModKeys.Shift))
-                {
-                    //var deltaCombined = ((deltaX + deltaY) / 2) * (Width + Height);
-                    //deltaX = deltaCombined / Width;
-                    //deltaY = deltaCombined / Height;
-                }
 
                 if (hysterisisCooldown > 0)
                 {
@@ -130,7 +124,7 @@ namespace Gaku
                 if (newWidth < 10) newWidth = 10;
                 if (newHeight < 10) newHeight = 10;
 
-                if (Keyboard.Modifiers.HasFlag(ModKeys.Shift))
+                if (Keyboard.Modifiers.HasFlag(ModKeys.Shift) ^ settings.KeepAspectRatio)
                 {
                     double scale = ((double)newHeight + (float)imageSettings.Padding) / pbMain.Image.Height;
                     newWidth = (int)((scale * pbMain.Image.Width) - (float)imageSettings.Padding * 2);
@@ -150,7 +144,7 @@ namespace Gaku
             }
         }
 
-        private void global_MouseUp(object sender, MouseEventArgs e)
+        private void handleMouseUp(object sender, MouseEventArgs e)
         {
             moveMode = MoveMode.None;
             label2.Text = moveMode.ToString();
