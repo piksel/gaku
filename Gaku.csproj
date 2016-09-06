@@ -70,6 +70,9 @@
     <Compile Include="Controls\AlphaLabel.Designer.cs">
       <DependentUpon>AlphaLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GakuAnimator.cs" />
+    <Compile Include="GakuAnimator.ImageInfo.cs" />
+    <Compile Include="ImageEx.cs" />
     <Compile Include="Settings\BorderStyle.cs" />
     <Compile Include="DataFormatsEx.cs" />
     <Compile Include="Settings\DisplayMode.cs" />
@@ -89,9 +92,7 @@
     <Compile Include="FormGaku.Designer.cs">
       <DependentUpon>FormGaku.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormGaku.Mouse.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="SizeHandler.cs" />
     <Compile Include="Settings\GakuSettings.cs" />
     <Compile Include="Controls\GifImage.cs" />
     <Compile Include="Settings\GeneralSettings.cs" />

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Gaku
 {
     using System.Runtime.InteropServices;
@@ -246,6 +247,32 @@ namespace Gaku
 
             alImageInfo.Visible = false; imageInformationToolStripMenuItem.Checked = false;
 
+            if (alphaForm)
+            {
+                pbMain.Visible = false;
+                var bmp = new Bitmap(pbMain.Image);
+                SetBitmap(bmp, 255);
+            }
+
+            if (image.IsAnimated())
+            {
+                //ImageAnimator.Animate(pbMain.Image, OnFrameChanged);
+                animationToolStripMenuItem.Visible = true;
+                frameCount = image.GetFrameCount(FrameDimension.Time);
+                pbMain.Enabled = false;
+                pbMain.Paint += PbMain_Paint;
+                updateAnimation();
+            }
+            else
+            {
+                animationToolStripMenuItem.Visible = false;
+            }
+
+        }
+
+        private void PbMain_Paint(object sender, PaintEventArgs e)
+        {
+            GakuAnimator.UpdateFrames(image);
         }
 
         private void updateIcon()

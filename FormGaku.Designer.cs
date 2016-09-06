@@ -46,10 +46,23 @@
             this.uploadImageToImgurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.imageInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reverseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.changeSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.faster4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fast2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripSeparator();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
+            this.slowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.slower4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alphaFormToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resizableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolboxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.customColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,6 +113,8 @@
             this.toolsToolStripMenuItem,
             this.toolStripMenuItem5,
             this.imageInformationToolStripMenuItem,
+            this.animationToolStripMenuItem,
+            this.alphaFormToolStripMenuItem,
             this.borderTypeToolStripMenuItem,
             this.setSizeToImageToolStripMenuItem,
             this.resetImageSettingsToolStripMenuItem,
@@ -108,7 +123,7 @@
             this.cmsGlobal.Name = "contextMenuStrip1";
             this.cmsGlobal.ShowCheckMargin = true;
             this.cmsGlobal.ShowImageMargin = false;
-            this.cmsGlobal.Size = new System.Drawing.Size(183, 242);
+            this.cmsGlobal.Size = new System.Drawing.Size(183, 286);
             // 
             // gakuV100ToolStripMenuItem
             // 
@@ -217,12 +232,108 @@
             this.imageInformationToolStripMenuItem.Text = "Image information";
             this.imageInformationToolStripMenuItem.Click += new System.EventHandler(this.imageInformationToolStripMenuItem_Click);
             // 
+            // animationToolStripMenuItem
+            // 
+            this.animationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stopToolStripMenuItem,
+            this.reverseToolStripMenuItem,
+            this.changeSpeedToolStripMenuItem});
+            this.animationToolStripMenuItem.Name = "animationToolStripMenuItem";
+            this.animationToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.animationToolStripMenuItem.Text = "Animation";
+            // 
+            // stopToolStripMenuItem
+            // 
+            this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.stopToolStripMenuItem.Text = "Play/Pause";
+            this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+            // 
+            // reverseToolStripMenuItem
+            // 
+            this.reverseToolStripMenuItem.Name = "reverseToolStripMenuItem";
+            this.reverseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.reverseToolStripMenuItem.Text = "Reverse";
+            this.reverseToolStripMenuItem.Click += new System.EventHandler(this.reverseToolStripMenuItem_Click);
+            // 
+            // changeSpeedToolStripMenuItem
+            // 
+            this.changeSpeedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.faster4ToolStripMenuItem,
+            this.fast2ToolStripMenuItem,
+            this.toolStripMenuItem7,
+            this.resetToolStripMenuItem,
+            this.toolStripMenuItem6,
+            this.slowToolStripMenuItem,
+            this.slower4ToolStripMenuItem});
+            this.changeSpeedToolStripMenuItem.Name = "changeSpeedToolStripMenuItem";
+            this.changeSpeedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.changeSpeedToolStripMenuItem.Text = "Speed";
+            // 
+            // faster4ToolStripMenuItem
+            // 
+            this.faster4ToolStripMenuItem.Name = "faster4ToolStripMenuItem";
+            this.faster4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.faster4ToolStripMenuItem.Tag = "4";
+            this.faster4ToolStripMenuItem.Text = "Faster (+4)";
+            this.faster4ToolStripMenuItem.Click += new System.EventHandler(this.animationSpeedToolStripMenuItem_Click);
+            // 
+            // fast2ToolStripMenuItem
+            // 
+            this.fast2ToolStripMenuItem.Name = "fast2ToolStripMenuItem";
+            this.fast2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fast2ToolStripMenuItem.Tag = "2";
+            this.fast2ToolStripMenuItem.Text = "Fast (+2)";
+            this.fast2ToolStripMenuItem.Click += new System.EventHandler(this.animationSpeedToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(149, 6);
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.resetToolStripMenuItem.Tag = "1";
+            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.animationSpeedToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(149, 6);
+            // 
+            // slowToolStripMenuItem
+            // 
+            this.slowToolStripMenuItem.Name = "slowToolStripMenuItem";
+            this.slowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.slowToolStripMenuItem.Tag = "-2";
+            this.slowToolStripMenuItem.Text = "Slow (-2)";
+            this.slowToolStripMenuItem.Click += new System.EventHandler(this.animationSpeedToolStripMenuItem_Click);
+            // 
+            // slower4ToolStripMenuItem
+            // 
+            this.slower4ToolStripMenuItem.Name = "slower4ToolStripMenuItem";
+            this.slower4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.slower4ToolStripMenuItem.Tag = "-4";
+            this.slower4ToolStripMenuItem.Text = "Slower (-4)";
+            this.slower4ToolStripMenuItem.Click += new System.EventHandler(this.animationSpeedToolStripMenuItem_Click);
+            // 
+            // alphaFormToolStripMenuItem
+            // 
+            this.alphaFormToolStripMenuItem.Name = "alphaFormToolStripMenuItem";
+            this.alphaFormToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.alphaFormToolStripMenuItem.Text = "Alpha Form";
+            this.alphaFormToolStripMenuItem.Click += new System.EventHandler(this.alphaFormToolStripMenuItem_Click);
+            // 
             // borderTypeToolStripMenuItem
             // 
             this.borderTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.noneToolStripMenuItem,
             this.thinToolStripMenuItem,
             this.resizableToolStripMenuItem,
+            this.toolboxToolStripMenuItem,
             this.customToolStripMenuItem,
             this.toolStripMenuItem3,
             this.customColorToolStripMenuItem,
@@ -251,6 +362,13 @@
             this.resizableToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.resizableToolStripMenuItem.Text = "Resizable";
             this.resizableToolStripMenuItem.Click += new System.EventHandler(this.resizableToolStripMenuItem_Click);
+            // 
+            // toolboxToolStripMenuItem
+            // 
+            this.toolboxToolStripMenuItem.Name = "toolboxToolStripMenuItem";
+            this.toolboxToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.toolboxToolStripMenuItem.Text = "Toolbox";
+            this.toolboxToolStripMenuItem.Click += new System.EventHandler(this.toolboxToolStripMenuItem_Click);
             // 
             // customToolStripMenuItem
             // 
@@ -717,6 +835,19 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem resetImageSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alphaFormToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolboxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem animationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stopToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reverseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem changeSpeedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem faster4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fast2ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem slowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem slower4ToolStripMenuItem;
     }
 }
 
