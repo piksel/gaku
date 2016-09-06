@@ -20,24 +20,15 @@ namespace Gaku
 
     public partial class FormGaku : Form
     {
-        MoveMode moveMode = MoveMode.None;
-        SizeMode sizeMode;
 
-        Point moveOrigin;
-        Rectangle rectOrigin;
-        Point correction;
 
         ImageSettings imageSettings;
         GeneralSettings settings;
 
-        double zoom = 1;
 
-        int hysterisisCooldown = 0;
-
-        bool localDelta = false;
-        private readonly int WHEEL_DELTA = 120;
 
         string imageFile = "";
+        Image image;
 
         readonly Color GakuPink = Color.FromArgb(255, 75, 168);
 
@@ -320,7 +311,7 @@ namespace Gaku
 
             }
 
-            constrainCanvas();
+            sizeHandler.ConstrainCanvas();
         }
 
 
@@ -578,10 +569,10 @@ namespace Gaku
             alImageInfo.Visible = false; imageInformationToolStripMenuItem.Checked = false;
         }
 
-        private void global_MouseDown(object sender, MouseEventArgs e) { handleMouseDown(sender, e); }
-        private void global_MouseWheel(object sender, MouseEventArgs e) { handleMouseWheel(sender, e); }
-        private void global_MouseMove(object sender, MouseEventArgs e) { handleMouseMove(sender, e); }
-        private void global_MouseUp(object sender, MouseEventArgs e) { handleMouseUp(sender, e); }
+        private void global_MouseDown(object sender, MouseEventArgs e) { sizeHandler.HandleMouseDown(sender, e); }
+        private void global_MouseWheel(object sender, MouseEventArgs e) { sizeHandler.HandleMouseWheel(sender, e); }
+        private void global_MouseMove(object sender, MouseEventArgs e) { sizeHandler.HandleMouseMove(sender, e); }
+        private void global_MouseUp(object sender, MouseEventArgs e) { sizeHandler.HandleMouseUp(sender, e); }
 
         private void keepAspectRatioToolStripMenuItem_Click(object sender, EventArgs e)
         {
