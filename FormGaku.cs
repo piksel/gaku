@@ -37,10 +37,18 @@ namespace Gaku
         private string versionString;
         private string gakuTitle;
         private string downloadFilename;
+        private SizeHandler sizeHandler;
+        private bool alphaForm;
+        private int frameCount;
+        private int animateSpeed = 1;
+        private bool animateReverse = false;
+        private bool animateEnabled = true;
 
-        public FormGaku()
+        public FormGaku(bool alphaForm = false, string file = null)
         {
             InitializeComponent();
+
+            this.alphaForm = alphaForm;
 
             wcDownload = new WebClient();
             wcDownload.DownloadFileCompleted += wcDownload_DownloadFileCompleted;
@@ -48,21 +56,31 @@ namespace Gaku
 
             settings = GeneralSettings.Load();
 
-            var args = Environment.GetCommandLineArgs();
-            if (args.Length > 1)
+            sizeHandler = new SizeHandler(this, imageSettings, pbMain, settings);
+
+            if (!string.IsNullOrEmpty(file))
             {
-                openImage(args[1]);
+                openImage(file);
             }
             else
             {
-                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
-                BackColor = GakuPink;
-                pbMain.Dock = DockStyle.Fill;
-                pbMain.BackColor = BackColor;
-                lTitle.Visible = true;
-                pbLogotype.Visible = true;
-                imageSettings = ImageSettings.Default;
-                bClose.Visible = true;
+                var args = Environment.GetCommandLineArgs();
+                if (args.Length > 1)
+                {
+                    openImage(args[1]);
+                }
+                else
+                {
+                    pbMain.SizeMode = PictureBoxSizeMode.Zoom;
+                    BackColor = GakuPink;
+                    pbMain.Dock = DockStyle.Fill;
+                    pbMain.BackColor = BackColor;
+                    lTitle.Visible = true;
+                    pbLogotype.Visible = true;
+                    imageSettings = ImageSettings.Default;
+                    sizeHandler.ImageSettings = imageSettings;
+                    bClose.Visible = true;
+                }
             }
 
             var v = Assembly.GetExecutingAssembly().GetName().Version;
@@ -77,6 +95,8 @@ namespace Gaku
             alHelp.MouseWheel += global_MouseWheel;
             alImageInfo.MouseWheel += global_MouseWheel;
 
+            KeyDown += global_KeyDown;
+
             if (settings.FirstStart)
             {
                 settings.FirstStart = false;
@@ -88,6 +108,68 @@ namespace Gaku
             alImageInfo.FastTextDraw = settings.FastTextDraw;
 
             updateSettingsMenu();
+
+            if(alphaForm)
+            {
+                var bmp = new Bitmap(pbMain.Image);
+                SetBitmap(bmp, 255);
+                sizeHandler.Resized += SizeHandler_Resized;
+            }
+
+            alphaFormToolStripMenuItem.Checked = alphaForm;
+            //pbMain.Visible = false;
+        }
+
+        private void global_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                case Keys.Right:
+                    openImage(1); break;
+                case Keys.Left:
+                    openImage(-1); break;
+                case Keys.Escape:
+                    Close(); break;
+                case Keys.Space:
+                    animateEnabled = !animateEnabled;
+                    updateAnimation();
+                    break;
+                case Keys.R:
+                    animateReverse = !animateReverse;
+                    updateAnimation();
+                    break;
+                case Keys.Add:
+                    animateSpeed += 1;
+                    updateAnimation();
+                    break;
+                case Keys.Subtract:
+                    animateSpeed -= 1;
+                    updateAnimation();
+                    break;
+
+                case Keys.M:
+                    pbMain.Invalidate(); break;
+            }
+        }
+
+        private void openImage(int offset)
+        {
+            var validExtensions = new string[] { ".jpg", ".jpeg", ".bmp", ".png", ".gif" };
+
+            var filesInDirectory = new List<string>();
+
+            var fp = Path.GetDirectoryName(imageFile);
+            foreach(var file in Directory.EnumerateFiles(fp, "*", SearchOption.TopDirectoryOnly)) {
+                if (validExtensions.Contains(Path.GetExtension(file)))
+                    filesInDirectory.Add(file);
+            }
+
+            if (filesInDirectory.Contains(imageFile))
+            {
+                var index = (filesInDirectory.IndexOf(imageFile) + offset) % filesInDirectory.Count;
+                openImage(filesInDirectory[index]);
+
+            }
         }
 
         private void wcDownload_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -123,9 +205,10 @@ namespace Gaku
             pbMain.BackColor = Color.Black;
 
             imageSettings = ImageSettings.ForFile(imageFile);
+            sizeHandler.ImageSettings = imageSettings;
             pbMain.Location = imageSettings.ImageOffset;
-            zoom = imageSettings.Zoom;
-            updateZoom(initial: true);
+
+            sizeHandler.UpdateZoom(initial: true);
             updateBorderStyle();
             if (imageSettings.New)
             {
@@ -211,64 +294,23 @@ namespace Gaku
             Height = frameSize.Height;
         }
 
-        private void updateZoom(int delta = 0, bool initial = false)
-        {
-            if (imageSettings.DisplayMode == DisplayMode.AutoFit) return;
-
-            var oldZoom = zoom;
-            while (delta != 0)
-            {
-                if (delta > 0)
-                {
-                    zoom *= 1.1;
-                    delta--;
-                }
-                else
-                {
-                    zoom *= 0.9;
-                    delta++;
-                }
-            }
-            if ((oldZoom > 1 && zoom < 1) ||
-                (oldZoom < 1 && zoom > 1)
-            )
-            {
-                zoom = 1;
-                pbMain.SizeMode = PictureBoxSizeMode.Normal;
-            }
-            else
-            {
-                pbMain.SizeMode = PictureBoxSizeMode.Zoom;
-
-            }
-            label3.Text = zoom.ToString("F3");
-
-            var oldWidth = pbMain.Width;
-            var oldHeight = pbMain.Height;
-
-            pbMain.Width = Math.Max((int)(zoom * pbMain.Image.Width), 20);
-            pbMain.Height = Math.Max((int)(zoom * pbMain.Image.Height), 20);
-
-            if (!initial)
-            {
-                var diffX = pbMain.Width - oldWidth;
-                var diffY = pbMain.Height - oldHeight;
-
-                pbMain.Left = pbMain.Left - (diffX / 2);
-                pbMain.Top = pbMain.Top - (diffY / 2);
-            }
-
-
-
-            constrainCanvas();
-        }
+       
 
         protected override CreateParams CreateParams
         {
             get
             {
+
                 CreateParams cp = base.CreateParams;
-                cp.Style = (int)(Win32.WindowStyle.WS_VISIBLE);
+                if (alphaForm)
+                {
+                    cp.ExStyle |= 0x00080000; // This form has to have the WS_EX_LAYERED extended style
+                }
+                else
+                {
+                    cp.Style = (int)(Win32.WindowStyle.WS_VISIBLE);
+                }
+                //cp.Style = (int)(Win32.WindowStyle.WS_VISIBLE);
                 //cp.ExStyle |= 0x80000 /* WS_EX_LAYERED */ | 0x20 /* WS_EX_TRANSPARENT */ | 0x80/* WS_EX_TOOLWINDOW */;
                 return cp;
             }
@@ -288,6 +330,7 @@ namespace Gaku
         private void global_DoubleClick(object sender, EventArgs e)
         {
             ToggleDisplayMode();
+            
         }
 
         private void ToggleDisplayMode()
@@ -599,39 +642,116 @@ namespace Gaku
             openImage(imageFile);
         }
 
-        private void constrainCanvas()
+       
+
+        private void alphaFormToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var minSize = 20;
+            // HACK: This is terrible!
+            // Every toggle of this option will spawn a new form that will wait until the child form has beeen closed
+            // Closing one form will escalate all the way to the top and this will cause the program to exit normally -NM 2016-09-06
+            Hide();
 
-            var newX = pbMain.Left;
-            var newY = pbMain.Top;
+            // Save current settings
+            imageSettings.Save();
+            settings.Save();
 
-            if (pbMain.Width > Width)
+            var af = new FormGaku(!alphaForm, imageFile);
+            af.ShowDialog();
+
+            // Reload settings that may have been changed by the child form
+            imageSettings = ImageSettings.ForFile(imageFile);
+            settings = GeneralSettings.Load();
+            Close();
+        }
+
+        public void SetBitmap(Bitmap bitmap, byte opacity)
+        {
+            if (bitmap.PixelFormat != PixelFormat.Format32bppArgb)
+                throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");
+
+            IntPtr screenDc = Win32.GetDC(IntPtr.Zero);
+            IntPtr memDc = Win32.CreateCompatibleDC(screenDc);
+            IntPtr hBitmap = IntPtr.Zero;
+            IntPtr oldBitmap = IntPtr.Zero;
+
+            try
             {
-                var minX = Width - pbMain.Width;
-                if (newX > 0) newX = 0;
-                if (newX < minX) newX = minX;
+                hBitmap = bitmap.GetHbitmap(Color.FromArgb(0));  // grab a GDI handle from this GDI+ bitmap
+                oldBitmap = Win32.SelectObject(memDc, hBitmap);
+
+                Win32.Size size = new Win32.Size(bitmap.Width, bitmap.Height);
+                Win32.Point pointSource = new Win32.Point(0, 0);
+                Win32.Point topPos = new Win32.Point(Left, Top);
+                Win32.BLENDFUNCTION blend = new Win32.BLENDFUNCTION();
+                blend.BlendOp = Win32.AC_SRC_OVER;
+                blend.BlendFlags = 0;
+                blend.SourceConstantAlpha = opacity;
+                blend.AlphaFormat = Win32.AC_SRC_ALPHA;
+
+                Win32.UpdateLayeredWindow(Handle, screenDc, ref topPos, ref size, memDc, ref pointSource, 0, ref blend, Win32.ULW_ALPHA);
             }
-            else
+            finally
             {
-                newX = Math.Min(newX, Width - minSize);
-                newX = Math.Max(newX, minSize - pbMain.Width);
+                Win32.ReleaseDC(IntPtr.Zero, screenDc);
+                if (hBitmap != IntPtr.Zero)
+                {
+                    Win32.SelectObject(memDc, oldBitmap);
+                    Win32.DeleteObject(hBitmap);
+                }
+                Win32.DeleteDC(memDc);
+            }
+        }
+
+        private void SizeHandler_Resized(object sender, EventArgs e)
+        {
+            var bmp = new Bitmap(image, Size);
+            SetBitmap(bmp, 255);
+        }
+
+        private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            animateEnabled = !animateEnabled;
+            updateAnimation();
+        }
+
+        private void OnFrameChanged(object sender, EventArgs e)
+        {
+            pbMain.Invalidate();
+        }
+
+        private void reverseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            animateReverse = !animateReverse;
+            updateAnimation();
+        }
+
+        private void updateAnimation()
+        {
+            GakuAnimator.StopAnimate(image, OnFrameChanged);
+
+            if(animateEnabled)
+            {
+                GakuAnimator.Animate(image, OnFrameChanged, animateReverse, animateSpeed);
             }
 
-            if (pbMain.Height > Height)
-            {
-                var minY = Height - pbMain.Height;
-                if (newY > 0) newY = 0;
-                if (newY < minY) newY = minY;
-            }
-            else
-            {
-                newY = Math.Min(newY, Height - minSize);
-                newY = Math.Max(newY, minSize - pbMain.Height);
-            }
+            updateAnimationMenu();
+        }
 
-            pbMain.Left = newX;
-            pbMain.Top = newY;
+        private void animationSpeedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            animateSpeed = int.Parse((sender as ToolStripMenuItem).Tag as string);
+            updateAnimation();
+        }
+
+        private void updateAnimationMenu()
+        {
+            stopToolStripMenuItem.Checked = animateEnabled;
+            reverseToolStripMenuItem.Checked = animateReverse;
+            faster4ToolStripMenuItem.Checked = animateSpeed == 4;
+            fast2ToolStripMenuItem.Checked = animateSpeed == 2;
+            resetToolStripMenuItem.Checked = animateSpeed == 1;
+            slowToolStripMenuItem.Checked = animateSpeed == -2;
+            slower4ToolStripMenuItem.Checked = animateSpeed == -4;
         }
     }
 }

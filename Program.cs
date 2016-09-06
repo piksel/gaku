@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +18,20 @@ namespace Gaku
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormGaku());
+
+            var args = Environment.GetCommandLineArgs();
+
+            var alpha = false;
+
+            if (args.Length > 1)
+            {
+                var image = Image.FromFile(args[1]);
+
+                alpha = image.HasAlpha() && !image.IsAnimated();
+                
+            }
+
+            Application.Run(new FormGaku(alpha));
         }
     }
 }

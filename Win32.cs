@@ -138,6 +138,7 @@ namespace Gaku
             public const UInt32 WS_TILED = WS_OVERLAPPED;
             public const UInt32 WS_ICONIC = WS_MINIMIZE;
             public const UInt32 WS_SIZEBOX = WS_THICKFRAME;
+            public const UInt32 WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 
             // Extended Window Styles 
             public const UInt32 WS_EX_DLGMODALFRAME = 0x0001;
