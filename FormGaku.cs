@@ -82,6 +82,7 @@ namespace Gaku
 
             MouseWheel += global_MouseWheel;
             pbMain.MouseWheel += global_MouseWheel;
+            pBorder.MouseWheel += global_MouseWheel;
             alHelp.MouseWheel += global_MouseWheel;
             alImageInfo.MouseWheel += global_MouseWheel;
 
@@ -293,7 +294,7 @@ namespace Gaku
             Close();
         }
 
-        private void pictureBox1_DoubleClick(object sender, EventArgs e)
+        private void global_DoubleClick(object sender, EventArgs e)
         {
             ToggleDisplayMode();
         }

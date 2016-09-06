@@ -449,7 +449,7 @@
             this.pbMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pbMain.TabIndex = 0;
             this.pbMain.TabStop = false;
-            this.pbMain.DoubleClick += new System.EventHandler(this.pictureBox1_DoubleClick);
+            this.pbMain.DoubleClick += new System.EventHandler(this.global_DoubleClick);
             this.pbMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
             this.pbMain.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
             this.pbMain.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
@@ -505,6 +505,7 @@
             this.pBorder.Name = "pBorder";
             this.pBorder.Size = new System.Drawing.Size(854, 515);
             this.pBorder.TabIndex = 10;
+            this.pBorder.DoubleClick += new System.EventHandler(this.global_DoubleClick);
             this.pBorder.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
             this.pBorder.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
             this.pBorder.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
@@ -648,6 +649,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.global_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.global_DragEnter);
+            this.DoubleClick += new System.EventHandler(this.global_DoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
