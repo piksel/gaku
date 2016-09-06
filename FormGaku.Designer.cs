@@ -63,6 +63,7 @@
             this.pxToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.pxToolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.setSizeToImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetImageSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();

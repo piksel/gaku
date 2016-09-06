@@ -254,8 +254,8 @@ namespace Gaku
             var oldWidth = pbMain.Width;
             var oldHeight = pbMain.Height;
 
-            pbMain.Width = (int)(zoom * pbMain.Image.Width);
-            pbMain.Height = (int)(zoom * pbMain.Image.Height);
+            pbMain.Width = Math.Max((int)(zoom * pbMain.Image.Width), 20);
+            pbMain.Height = Math.Max((int)(zoom * pbMain.Image.Height), 20);
 
             if (!initial)
             {
@@ -265,6 +265,10 @@ namespace Gaku
                 pbMain.Left = pbMain.Left - (diffX / 2);
                 pbMain.Top = pbMain.Top - (diffY / 2);
             }
+
+
+
+            constrainCanvas();
         }
 
         protected override CreateParams CreateParams
@@ -314,6 +318,8 @@ namespace Gaku
                 pbMain.SizeMode = PictureBoxSizeMode.AutoSize;
 
             }
+
+            constrainCanvas();
         }
 
 
@@ -580,6 +586,48 @@ namespace Gaku
         {
             settings.FastTextDraw = !settings.FastTextDraw;
             updateSettingsMenu();
+        }
+
+        private void resetImageSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            imageSettings = ImageSettings.Default;
+            imageSettings.Save();
+            openImage(imageFile);
+        }
+
+        private void constrainCanvas()
+        {
+            var minSize = 20;
+
+            var newX = pbMain.Left;
+            var newY = pbMain.Top;
+
+            if (pbMain.Width > Width)
+            {
+                var minX = Width - pbMain.Width;
+                if (newX > 0) newX = 0;
+                if (newX < minX) newX = minX;
+            }
+            else
+            {
+                newX = Math.Min(newX, Width - minSize);
+                newX = Math.Max(newX, minSize - pbMain.Width);
+            }
+
+            if (pbMain.Height > Height)
+            {
+                var minY = Height - pbMain.Height;
+                if (newY > 0) newY = 0;
+                if (newY < minY) newY = minY;
+            }
+            else
+            {
+                newY = Math.Min(newY, Height - minSize);
+                newY = Math.Max(newY, minSize - pbMain.Height);
+            }
+
+            pbMain.Left = newX;
+            pbMain.Top = newY;
         }
     }
 }
