@@ -235,7 +235,9 @@
     <None Include="Resources\piksel-gaku.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\gaku-document.ico" />
+    <None Include="gaku-document.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\document.ico" />
     <Content Include="icon.ico" />
     <None Include="Resources\upload-done.png" />
