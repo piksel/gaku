@@ -90,7 +90,6 @@
             // cbGif
             // 
             this.cbGif.AutoSize = true;
-            this.cbGif.Enabled = false;
             this.cbGif.Location = new System.Drawing.Point(22, 103);
             this.cbGif.Name = "cbGif";
             this.cbGif.Size = new System.Drawing.Size(66, 17);

@@ -116,13 +116,13 @@ namespace Gaku
         private void openImage(string file)
         {
             imageFile = file;
-            using (var ms = new MemoryStream())
-            {
-                var image = Image.FromFile(imageFile);
-                image.Save(ms, image.RawFormat);
-                ms.Seek(0, SeekOrigin.Begin);
-                pbMain.Image = Image.FromStream(ms);
-            }
+            //using (var ms = new MemoryStream())
+            //{
+                image = Image.FromFile(imageFile);
+                //image.Save(ms, image.RawFormat);
+                //ms.Seek(0, SeekOrigin.Begin);
+                pbMain.Image = image;// Image.FromStream(ms);
+            //}
             Text = Path.GetFileName(imageFile) + " - Gaku";
 
             lTitle.Visible = false;
