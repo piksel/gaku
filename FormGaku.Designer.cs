@@ -34,7 +34,6 @@
             this.gakuV100ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imageInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.keepAspectRatioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fastTextDrawingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +44,8 @@
             this.openImagePathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uploadImageToImgurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.imageInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.borderTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thinToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,11 +78,9 @@
             this.pDownloading = new System.Windows.Forms.Panel();
             this.pBorder = new System.Windows.Forms.Panel();
             this.bClose = new System.Windows.Forms.Button();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.resetImageSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.imgurLoading = new Gaku.ImgurLoading();
             this.alHelp = new Gaku.AlphaLabel();
             this.alImageInfo = new Gaku.AlphaLabel();
+            this.imgurLoading = new Gaku.ImgurLoading();
             this.cmsGlobal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbLogotype)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbMain)).BeginInit();
@@ -109,7 +108,7 @@
             this.cmsGlobal.Name = "contextMenuStrip1";
             this.cmsGlobal.ShowCheckMargin = true;
             this.cmsGlobal.ShowImageMargin = false;
-            this.cmsGlobal.Size = new System.Drawing.Size(183, 264);
+            this.cmsGlobal.Size = new System.Drawing.Size(183, 242);
             // 
             // gakuV100ToolStripMenuItem
             // 
@@ -129,13 +128,6 @@
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.helpToolStripMenuItem.Text = "Help";
             this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
-            // 
-            // imageInformationToolStripMenuItem
-            // 
-            this.imageInformationToolStripMenuItem.Name = "imageInformationToolStripMenuItem";
-            this.imageInformationToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.imageInformationToolStripMenuItem.Text = "Image information";
-            this.imageInformationToolStripMenuItem.Click += new System.EventHandler(this.imageInformationToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -212,6 +204,18 @@
             this.uploadImageToImgurToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.uploadImageToImgurToolStripMenuItem.Text = "Upload image to Imgur";
             this.uploadImageToImgurToolStripMenuItem.Click += new System.EventHandler(this.uploadImageToImgurToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(179, 6);
+            // 
+            // imageInformationToolStripMenuItem
+            // 
+            this.imageInformationToolStripMenuItem.Name = "imageInformationToolStripMenuItem";
+            this.imageInformationToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.imageInformationToolStripMenuItem.Text = "Image information";
+            this.imageInformationToolStripMenuItem.Click += new System.EventHandler(this.imageInformationToolStripMenuItem_Click);
             // 
             // borderTypeToolStripMenuItem
             // 
@@ -358,6 +362,13 @@
             this.setSizeToImageToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.setSizeToImageToolStripMenuItem.Text = "Resize to image";
             this.setSizeToImageToolStripMenuItem.Click += new System.EventHandler(this.setSizeToImageToolStripMenuItem_Click);
+            // 
+            // resetImageSettingsToolStripMenuItem
+            // 
+            this.resetImageSettingsToolStripMenuItem.Name = "resetImageSettingsToolStripMenuItem";
+            this.resetImageSettingsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.resetImageSettingsToolStripMenuItem.Text = "Reset image settings";
+            this.resetImageSettingsToolStripMenuItem.Click += new System.EventHandler(this.resetImageSettingsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
@@ -531,29 +542,6 @@
             this.bClose.MouseEnter += new System.EventHandler(this.bClose_MouseEnter);
             this.bClose.MouseLeave += new System.EventHandler(this.bClose_MouseLeave);
             // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(179, 6);
-            // 
-            // resetImageSettingsToolStripMenuItem
-            // 
-            this.resetImageSettingsToolStripMenuItem.Name = "resetImageSettingsToolStripMenuItem";
-            this.resetImageSettingsToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.resetImageSettingsToolStripMenuItem.Text = "Reset image settings";
-            // 
-            // imgurLoading
-            // 
-            this.imgurLoading.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.imgurLoading.Cursor = System.Windows.Forms.Cursors.Default;
-            this.imgurLoading.Done = false;
-            this.imgurLoading.Location = new System.Drawing.Point(12, 441);
-            this.imgurLoading.Name = "imgurLoading";
-            this.imgurLoading.Size = new System.Drawing.Size(61, 61);
-            this.imgurLoading.Speed = 80;
-            this.imgurLoading.TabIndex = 6;
-            this.imgurLoading.Visible = false;
-            // 
             // alHelp
             // 
             this.alHelp.Alpha = ((byte)(128));
@@ -625,6 +613,18 @@
             this.alImageInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.global_MouseDown);
             this.alImageInfo.MouseMove += new System.Windows.Forms.MouseEventHandler(this.global_MouseMove);
             this.alImageInfo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.global_MouseUp);
+            // 
+            // imgurLoading
+            // 
+            this.imgurLoading.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.imgurLoading.Cursor = System.Windows.Forms.Cursors.Default;
+            this.imgurLoading.Done = false;
+            this.imgurLoading.Location = new System.Drawing.Point(12, 441);
+            this.imgurLoading.Name = "imgurLoading";
+            this.imgurLoading.Size = new System.Drawing.Size(61, 61);
+            this.imgurLoading.Speed = 80;
+            this.imgurLoading.TabIndex = 6;
+            this.imgurLoading.Visible = false;
             // 
             // FormGaku
             // 
