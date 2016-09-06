@@ -380,12 +380,20 @@ namespace Gaku
 
         private void updateBorderStyle()
         {
+            if(alphaForm) return;
+
             var wlstyle = Win32.GetWindowLong(Handle, Win32.WindowLongFlags.GWL_STYLE);
+            var wlexstyle = Win32.GetWindowLong(Handle, Win32.WindowLongFlags.GWL_EXSTYLE);
             switch (imageSettings.BorderStyle)
             {
                 case BorderStyle.Resizable:
                     wlstyle &= ~Win32.WindowStyle.WS_BORDER;
                     wlstyle |= Win32.WindowStyle.WS_SIZEBOX;
+                    break;
+
+                case BorderStyle.Toolbox:
+                    wlstyle |= Win32.WindowStyle.WS_OVERLAPPEDWINDOW | Win32.WindowStyle.WS_BORDER;
+                    wlexstyle |= Win32.WindowStyle.WS_EX_TOOLWINDOW;
                     break;
 
                 case BorderStyle.Thin:
@@ -406,6 +414,8 @@ namespace Gaku
 
             }
             Win32.SetWindowLong(Handle, Win32.WindowLongFlags.GWL_STYLE, wlstyle);
+            Win32.SetWindowLong(Handle, Win32.WindowLongFlags.GWL_EXSTYLE, wlexstyle);
+
 
             pBorder.Top = imageSettings.Padding;
             pBorder.Left = imageSettings.Padding;
@@ -416,6 +426,8 @@ namespace Gaku
             thinToolStripMenuItem.Checked = imageSettings.BorderStyle == BorderStyle.Thin;
             resizableToolStripMenuItem.Checked = imageSettings.BorderStyle == BorderStyle.Resizable;
             customToolStripMenuItem.Checked = imageSettings.BorderStyle == BorderStyle.Custom;
+            toolboxToolStripMenuItem.Checked = imageSettings.BorderStyle == BorderStyle.Toolbox;
+
         }
 
         private void hideCursorToolStripMenuItem_Click(object sender, EventArgs e)

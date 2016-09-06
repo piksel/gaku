@@ -104,6 +104,12 @@ namespace Gaku
             updateBorderStyle();
         }
 
+        private void toolboxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            imageSettings.BorderStyle = BorderStyle.Toolbox;
+            updateBorderStyle();
+        }
+
         private void customToolStripMenuItem_Click(object sender, EventArgs e)
         {
             imageSettings.BorderStyle = BorderStyle.Custom;

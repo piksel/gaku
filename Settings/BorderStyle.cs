@@ -11,6 +11,7 @@ namespace Gaku
         None,
         Thin,
         Resizable,
+        Toolbox,
         Custom
     }
 }
