@@ -781,5 +781,11 @@ namespace Gaku
             slowToolStripMenuItem.Checked = animateSpeed == -2;
             slower4ToolStripMenuItem.Checked = animateSpeed == -4;
         }
+
+        private void alwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TopMost = !TopMost;
+            alwaysOnTopToolStripMenuItem.Checked = TopMost;
+        }
     }
 }
