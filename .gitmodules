@@ -1,0 +1,3 @@
+[submodule "Installer/NsisMultiUser"]
+	path = Installer/NsisMultiUser
+	url = https://github.com/Drizin/NsisMultiUser
