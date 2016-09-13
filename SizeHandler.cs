@@ -36,7 +36,7 @@ namespace Gaku
         PictureBox pbMain;
         private GeneralSettings settings;
 
-        Image image;
+        public Image Image { get; set; }
 
         public event SizeHandlerResizedEventHandler Resized;
 
@@ -56,7 +56,7 @@ namespace Gaku
         {
             this.form = form;
             ImageSettings = imageSettings;
-            this.image = image;
+            Image = image;
             this.settings = settings;
         }
 
@@ -136,8 +136,8 @@ namespace Gaku
             var oldWidth = pbMain.Width;
             var oldHeight = pbMain.Height;
 
-            pbMain.Width = Math.Max((int)(zoom * image.Width), 20);
-            pbMain.Height = Math.Max((int)(zoom * image.Height), 20);
+            pbMain.Width = Math.Max((int)(zoom * Image.Width), 20);
+            pbMain.Height = Math.Max((int)(zoom * Image.Height), 20);
 
             if (!initial)
             {
@@ -207,8 +207,8 @@ namespace Gaku
 
                 if (Keyboard.Modifiers.HasFlag(ModKeys.Shift) ^ settings.KeepAspectRatio)
                 {
-                    double scale = ((double)newHeight + (float)ImageSettings.Padding) / image.Height;
-                    newWidth = (int)((scale * image.Width) - (float)ImageSettings.Padding * 2);
+                    double scale = ((double)newHeight + (float)ImageSettings.Padding) / Image.Height;
+                    newWidth = (int)((scale * Image.Width) - (float)ImageSettings.Padding * 2);
                 }
 
                 form.Width = newWidth;

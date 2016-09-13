@@ -207,6 +207,7 @@ namespace Gaku
 
             imageSettings = ImageSettings.ForFile(imageFile);
             sizeHandler.ImageSettings = imageSettings;
+            sizeHandler.Image = pbMain.Image;
             pbMain.Location = imageSettings.ImageOffset;
 
             sizeHandler.UpdateZoom(initial: true);
